@@ -117,6 +117,20 @@ public class SinglyLL {
 		nextOfNodeToDelete = temp.next.next;
 		temp.next = nextOfNodeToDelete;
 	}
+	
+	public static void reverseSinglyLL() {
+		Node prev = null;
+		Node nextNode = null;
+		Node current = head;
+		
+		while(current!=null) {
+			nextNode = current.next;
+			current.next = prev;
+			prev = current;
+			current = nextNode;
+		}
+		head = prev;
+	}
 
 	public static void main(String[] args) {
 		
@@ -135,6 +149,10 @@ public class SinglyLL {
 		
 		insertAtKthPos(15,4);
 		System.out.println("\n");
+		printSLL();
+		
+		reverseSinglyLL();
+		System.out.println("\n\nReversed Singly LL is:");
 		printSLL();
 		
 		deleteAtHead();
