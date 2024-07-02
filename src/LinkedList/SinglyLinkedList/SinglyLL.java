@@ -15,6 +15,10 @@ public class SinglyLL {
 	
 	public static void insertAtHead(int data) {
 		Node newNode = new Node(data);
+		if(head == null) {
+			head = newNode;
+			return;
+		}
 		newNode.next = head;
 		head = newNode;
 	}
@@ -33,6 +37,10 @@ public class SinglyLL {
 	public static void insertAtEnd(int data) {
 		Node newNode = new Node(data);
 		Node temp = head;
+		if(head == null) {
+			head = newNode;
+			return;
+		}
 		while(temp.next!=null) {
 			temp = temp.next;
 		}
@@ -75,6 +83,10 @@ public class SinglyLL {
 	}
 	
 	public static void deleteAtHead() {
+		if(head == null) {
+			System.out.println("List is Empty! Cannot delete.");
+			return;
+		}
 		Node temp = head.next;
 		head.next = null;
 		head = temp;
@@ -82,6 +94,10 @@ public class SinglyLL {
 	
 	public static void deleteAtEnd() {
 		Node temp = head;
+		if(head == null) {
+			System.out.println("List is Empty! Cannot delete.");
+			return;
+		}
 		while(temp.next.next!=null) {
 			temp = temp.next;
 		}
@@ -93,6 +109,11 @@ public class SinglyLL {
 	public static void deleteAtKthPos(int pos) {
 		
 		int len = getLLSize();
+		
+		if(head == null) {
+			System.out.println("List is Empty! Cannot delete.");
+			return;
+		}
 		
 		if(pos == 1) {
 			deleteAtHead();
