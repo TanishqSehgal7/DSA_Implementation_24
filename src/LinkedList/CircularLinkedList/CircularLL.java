@@ -6,7 +6,7 @@ public class CircularLL {
 	static Node tail = null;
 	
 	public static class Node {
-		
+
 		int data;
 		Node next;
 		
@@ -193,6 +193,5 @@ public class CircularLL {
 		reverseCLL();
 		printLL();
 		System.out.println("\n");
-
 	}
 }
