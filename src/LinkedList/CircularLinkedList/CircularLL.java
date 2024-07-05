@@ -134,6 +134,21 @@ public class CircularLL {
 		}
 	}
 	
+	public static void reverseCLL() {
+		Node current = head;
+		Node previous = null;
+		Node nextNode = null;
+		
+		do {
+			nextNode = current.next;
+			current.next = previous;
+			previous = current;
+			current = nextNode;
+		} while(current != head);
+		nextNode.next = previous;
+		head = previous;
+	}
+	
 	public static void printLL() {
 		Node current = head;
 		do {
@@ -172,6 +187,10 @@ public class CircularLL {
 		System.out.println("\n");
 		
 		deleteAtKthPos(3);
+		printLL();
+		System.out.println("\n");
+		
+		reverseCLL();
 		printLL();
 		System.out.println("\n");
 
