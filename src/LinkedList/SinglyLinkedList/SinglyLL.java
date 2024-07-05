@@ -152,6 +152,45 @@ public class SinglyLL {
 		}
 		head = prev;
 	}
+	
+	public static int findMiddleNode() {
+		
+		Node slow = head;
+		Node fast = head;
+		
+		while(fast.next.next!=null) {
+			slow = slow.next;
+			fast = fast.next.next;
+		}
+		if(fast == null || fast.next == null || fast.next.next == null) {
+			return slow.data;
+		}
+		
+		return -1;
+	}
+	
+	public static void deleteMiddleNode() {
+		
+		Node slow = head;
+		Node fast = head;
+		Node temp = null;
+		
+		while(fast.next.next!=null) {
+			slow = slow.next;
+			fast = fast.next.next;
+		}
+		if(fast == null || fast.next == null) {
+			Node current = head;
+			while(current.next!=slow) {
+				current = current.next;
+			}
+			
+			if(current.next == slow) {
+				current.next = current.next.next;
+				return;
+			}
+		}
+	}
 
 	public static void main(String[] args) {
 		
@@ -172,21 +211,27 @@ public class SinglyLL {
 		System.out.println("\n");
 		printSLL();
 		
-		reverseSinglyLL();
-		System.out.println("\n\nReversed Singly LL is:");
-		printSLL();
-		
-		deleteAtHead();
 		System.out.println("\n");
-		printSLL();
+		System.out.println(findMiddleNode());
 		
-		deleteAtEnd();
-		System.out.println("\n");
-		printSLL();
+//		deleteMiddleNode();
+//		printSLL();
 		
-		deleteAtKthPos(3);
-		System.out.println("\n");
-		printSLL();
+//		reverseSinglyLL();
+//		System.out.println("\n\nReversed Singly LL is:");
+//		printSLL();
+//		
+//		deleteAtHead();
+//		System.out.println("\n");
+//		printSLL();
+//		
+//		deleteAtEnd();
+//		System.out.println("\n");
+//		printSLL();
+//		
+//		deleteAtKthPos(3);
+//		System.out.println("\n");
+//		printSLL();
 	}
 
 }
