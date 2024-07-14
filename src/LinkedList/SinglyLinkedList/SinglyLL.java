@@ -1,5 +1,7 @@
 package LinkedList.SinglyLinkedList;
 
+import java.util.HashSet;
+
 public class SinglyLL {
 	
 	static Node head = null;
@@ -169,6 +171,44 @@ public class SinglyLL {
 		return -1;
 	}
 	
+	public static void removeDuplicatesSortedLL() {
+		
+		Node current = head;
+		if(head == null) {
+			return;
+		}
+		
+		while(current!=null && current.next!=null) {
+
+			if(current.data == current.next.data) {
+				current.next = current.next.next;
+			} else {
+				current = current.next;
+			}
+		}
+	}
+	
+	public static void removeDuplicatesUnSortedLL() {
+		
+		if(head == null) {
+			return;
+		}
+		
+		Node current = head;
+		HashSet<Integer> set = new HashSet<Integer>();
+		Node prev = null;
+		while(current!=null) {
+			if(!set.contains(current.data)) {
+				set.add(current.data);
+				prev = current;
+			} else if(set.contains(current.data)) {
+				prev.next = current.next;
+				prev = current;
+			}
+			current = current.next;
+		}
+	}
+	
 	public static void deleteMiddleNode() {
 		
 		Node slow = head;
@@ -194,25 +234,51 @@ public class SinglyLL {
 
 	public static void main(String[] args) {
 		
-		insertAtHead(10);
+//		insertAtHead(10);
+//		insertAtHead(10);
+//		insertAtHead(20);
+//		insertAtHead(20);
+//		insertAtHead(30);
+//		insertAtHead(40);
+//		insertAtHead(50);
+//		insertAtHead(60);
+//		insertAtHead(60);
+//		
+//		printSLL();
+//		
+//		removeDuplicatesSortedLL();
+//		System.out.println("\n");
+//		printSLL();
+				
 		insertAtHead(20);
+		insertAtHead(10);
 		insertAtHead(30);
-		printSLL();
+		insertAtHead(40);
+		insertAtHead(30);
+		insertAtHead(20);
+		insertAtHead(60);
 		
-		insertAtEnd(5);
-		System.out.println("\n");
-		printSLL();
-		
-		insertAtKthPos(25,2);
-		System.out.println("\n");
-		printSLL();
-		
-		insertAtKthPos(15,4);
 		System.out.println("\n");
 		printSLL();
 		
+		removeDuplicatesUnSortedLL();
 		System.out.println("\n");
-		System.out.println(findMiddleNode());
+		printSLL();
+		
+//		insertAtEnd(5);
+//		System.out.println("\n");
+//		printSLL();
+//		
+//		insertAtKthPos(25,2);
+//		System.out.println("\n");
+//		printSLL();
+//		
+//		insertAtKthPos(15,4);
+//		System.out.println("\n");
+//		printSLL();
+//		
+//		System.out.println("\n");
+//		System.out.println(findMiddleNode());
 		
 //		deleteMiddleNode();
 //		printSLL();
