@@ -1,7 +1,5 @@
 package LinkedList.SinglyLinkedList;
 
-import LinkedList.SinglyLinkedList.SinglyLL.Node;
-
 public class PalindromeLL {
 	
 	static Node head = null;
