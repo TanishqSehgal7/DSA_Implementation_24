@@ -1,7 +1,5 @@
 package LinkedList.DoublyLinkedList;
 
-import LinkedList.DoublyLinkedList.DoublyLL.Node;
-
 public class PalindromeDLL {
 	
 	static Node head = null;

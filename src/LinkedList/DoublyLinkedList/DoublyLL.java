@@ -184,6 +184,17 @@ public class DoublyLL {
 		}
 	}
 	
+	public static void swapFirstAndLast() {
+		
+		if(head == null || head.next == null) {
+			return;
+		}
+		
+		int temp = head.data;
+		head.data = tail.data;
+		tail.data = temp;
+	}
+	
 	public static void main(String[] args) {
 		
 		insertAtHead(10);
@@ -247,6 +258,10 @@ public class DoublyLL {
 		
 		reverseDLL2();
 		System.out.println("\n");
+		printLL();
+		
+		swapFirstAndLast();
+		System.out.println("\n\nAfter swapping first and last node...\n");
 		printLL();
 		
 	}
