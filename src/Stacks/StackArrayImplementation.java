@@ -3,12 +3,12 @@ package Stacks;
 import java.util.Scanner;
 
 public class StackArrayImplementation {
-
-	public static int top = -1;
-	public static int size;
-	public static int arr[];
 	
-	static Scanner scn = new Scanner(System.in);
+	static int arr[];
+	static int size;
+	static int top;
+	
+	public static Scanner scn = new Scanner(System.in);
 	
 	public StackArrayImplementation(int size) {
 		this.size = size;
@@ -16,71 +16,101 @@ public class StackArrayImplementation {
 		this.top = -1;
 	}
 	
-	public static int[] push(int arr[],int data) {
-		
-		if(top>size-1) {
-			System.out.println("Stack Overflow!");
-		} else {
-			arr[++top] = data;
-		}
-		
-		return arr;
+	public static boolean isFull() {
+		return top>size-1;
 	}
 	
-	public static int pop() {
+	public static boolean isEmpty() {
+		return top==-1;
+	}
+	
+	public static void push(int data) {
 		
-		if(top==-1) {
-			System.out.println("Stack Underflow!");
-			return -1;
-		} else {
-			arr[top] = -1;
-			return arr[top--];
+		try {
+			if(!isFull()) {
+				arr[++top] = data;
+			}
+		} catch (Exception e) {
+			System.out.println("Stack Overflow! " + e.getMessage());
 		}
 	}
 	
+	
+	public static void pop() {
+		
+		try {
+			if(!isEmpty()) {
+				arr[top] = -1;
+				top-=1;
+			}
+		} catch (Exception e) {
+			System.out.println("Stack Underflow! " + e.getMessage());
+		}
+	}
 	
 	public static int peek() {
-		if(top==-1) {
+		if(isEmpty()) {
 			return -1;
 		} else {
 			return arr[top];
 		}
 	}
 	
-	
 	public static void printStack() {
-		
-		if(top==-1) {
-			System.out.println("Stack is Empty");
+		if(isEmpty()) {
+			System.out.println("Empty Stack!");
 		} else {
-			for(int i = top; i>=0;i--) {
+			for(int i=top;i>=0;i--) {
 				System.out.println(arr[i]);
 			}
 		}
 	}
 	
-	
 	public static void main(String[] args) {
 		
-		System.out.println("Enter Size of Stack:\n");
-		size = scn.nextInt();
-
-		StackArrayImplementation stack = new StackArrayImplementation(size);
 		
-		for(int i=0;i<size;i++) {
-			int element = scn.nextInt();
-			stack.push(arr, element);
-		}
+		System.out.println("Enter the size of Stack:\n");
+		int n = scn.nextInt();
 		
+		StackArrayImplementation stack = new StackArrayImplementation(n);
+		
+		stack.push(10);
+		stack.push(20);
+		
+		System.out.println("Stack is:");
 		printStack();
 		System.out.println("\n");
 		
 		stack.pop();
-		printStack();	
+		System.out.println("\n");
 		
-		System.out.println("Top of Stack: " + stack.peek());
+		stack.push(20);
+		stack.push(30);
+		stack.push(40);
 		
-
+		System.out.println("Stack is:");
+		printStack();
+		System.out.println("\n");
+		
+		System.out.println("Top of Stack is:\n " + stack.peek());
+		
+		stack.push(50);
+		System.out.println("Stack is:");
+		printStack();
+		System.out.println("\n");
+		
+		stack.push(60); // gives index out of bound error
+		
+		
+		stack.pop();
+		stack.pop();
+		stack.pop();
+		stack.pop();
+		stack.pop();
+		stack.pop();
+		printStack();
+		System.out.println("\n");
+		
 	}
 
 }
