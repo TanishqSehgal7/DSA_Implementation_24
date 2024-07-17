@@ -2,46 +2,61 @@ package Stacks;
 
 import java.util.Scanner;
 
-public class StackArrayImplementation {
-	
-	static int arr[];
+public class StackUsingLinkedList {
+
+	static Node head;
 	static int size;
 	static int top;
 	
 	public static Scanner scn = new Scanner(System.in);
 	
-	public StackArrayImplementation(int size) {
+	static class Node {
+		int data;
+		Node next;
+		
+		public Node(int data) {
+			this.data = data;
+			this.next = null;
+		}
+	}
+	
+	public StackUsingLinkedList(int size) {
 		this.size = size;
-		this.arr = new int[size];
+		this.head = null;
 		this.top = -1;
 	}
 	
-	public static boolean isFull() {
-		return top>size-1;
+	public static boolean isEmpty() {
+		return head == null && top==-1;
 	}
 	
-	public static boolean isEmpty() {
-		return top==-1;
+	public static boolean isFull() {
+		return top>=size-1;
 	}
 	
 	public static void push(int data) {
 		
-		try {
-			if(!isFull()) {
-				arr[++top] = data;
-			}
-		} catch (Exception e) {
-			System.out.println("Stack Overflow! " + e.getMessage());
+		Node newNode = new Node(data);
+		if(isEmpty()) {
+			++top;
+			head = newNode;
+			return;
+		} else if(!isFull()) {
+			++top;
+			newNode.next = head;
+			head = newNode;
+			return;
+		} else if(isFull()) {
+			System.out.println("Stack Overflow!");
+			return;
 		}
 	}
 	
-	
 	public static void pop() {
-		
 		try {
 			if(!isEmpty()) {
-				arr[top] = -1;
-				top-=1;
+				head = head.next;
+				--top;
 			}
 		} catch (Exception e) {
 			System.out.println("Stack Underflow! " + e.getMessage());
@@ -49,30 +64,28 @@ public class StackArrayImplementation {
 	}
 	
 	public static int peek() {
-		if(isEmpty()) {
-			return -1;
-		} else {
-			return arr[top];
-		}
+		return head.data;
 	}
 	
 	public static void printStack() {
+		
 		if(isEmpty()) {
-			System.out.println("Empty Stack!");
+			System.out.println("Stack is Empty!");
 		} else {
-			for(int i=top;i>=0;i--) {
-				System.out.println(arr[i]);
+			Node current = head;
+			while(current!=null) {
+				System.out.println(current.data);
+				current = current.next;
 			}
 		}
-	}
-	
+ 	}
+
 	public static void main(String[] args) {
-		
-		
-		System.out.println("Enter the size of Stack:\n");
+
+		System.out.println("Enter size of Stack");
 		size = scn.nextInt();
 		
-		StackArrayImplementation stack = new StackArrayImplementation(size);
+		StackUsingLinkedList stack = new StackUsingLinkedList(size);
 		
 		stack.push(10);
 		stack.push(20);
@@ -80,6 +93,7 @@ public class StackArrayImplementation {
 		System.out.println("Stack is:");
 		printStack();
 		System.out.println("\n");
+		System.out.println("\nTop is: " + top);
 		
 		stack.pop();
 		System.out.println("\n");
@@ -91,6 +105,7 @@ public class StackArrayImplementation {
 		System.out.println("Stack is:");
 		printStack();
 		System.out.println("\n");
+		System.out.println("\nTop is: " + top);
 		
 		System.out.println("Top of Stack is:\n " + stack.peek());
 		
@@ -98,19 +113,9 @@ public class StackArrayImplementation {
 		System.out.println("Stack is:");
 		printStack();
 		System.out.println("\n");
+		System.out.println("\nTop is: " + top);
 		
 		stack.push(60); // gives index out of bound error
-		
-		
-//		stack.pop();
-//		stack.pop();
-//		stack.pop();
-//		stack.pop();
-//		stack.pop();
-//		stack.pop();
-//		printStack();
-//		System.out.println("\n");
-		
 	}
 
 }
