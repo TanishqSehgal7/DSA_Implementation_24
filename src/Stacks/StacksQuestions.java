@@ -28,17 +28,14 @@ public class StacksQuestions {
 			
 			if(ch == '{' || ch == '[' || ch ==  '(') {
 				stack.push(ch);
-			} else if((ch=='}' || ch==']' || ch==')') && stack.isEmpty()) {
-				return false;
-			}
-			
-			if(!stack.isEmpty()) {
-				if(
-					(ch == '}' && stack.peek() == '{') || 
-					(ch == ']' && stack.peek() == '[') || 
-					(ch == ')' && stack.peek() == '(')) {
-					
-					stack.pop();
+			} else {
+				if(!stack.isEmpty()) {
+					if((ch == '}' && stack.peek() == '{') || 
+						(ch == ']' && stack.peek() == '[') || 
+						(ch == ')' && stack.peek() == '(')) {
+						
+						stack.pop();
+					}
 				}
 			}
 		}
@@ -54,8 +51,8 @@ public class StacksQuestions {
 		String str = "Tanishq";
 		System.out.println("Reversed String: " + reverStringUsingStack(str));
 		
-//		String parenthesis = "[()]{}{()}";
-		String parenthesis = "[(}]";
+		String parenthesis = "[()]{}{()}";
+//		String parenthesis = "[(}]";
 		System.out.println(balancedParenthesis(parenthesis));
 	}
 }
