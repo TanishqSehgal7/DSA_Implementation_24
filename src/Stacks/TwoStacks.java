@@ -57,7 +57,7 @@ public class TwoStacks {
 		if(is1Empty()) {
 			System.out.println("Stack 1 Underflow!");
 		} else {
-			arr[top1] = -1;
+			arr[top1] = 0;
 			top1-=1;
 		}
 	}
@@ -66,9 +66,17 @@ public class TwoStacks {
 		if(is2Empty()) {
 			System.out.println("Stack 2 Underflow!");
 		} else {
-			arr[top2] = -1;
+			arr[top2] = 0;
 			top2-=1;
 		}
+	}
+	
+	public static int peek1() {
+		return arr[top1];
+	}
+	
+	public static int peek2() {
+		return arr[top2];
 	}
 	
 	public static void printStack() {
@@ -90,6 +98,16 @@ public class TwoStacks {
 		ts.push2(50);
 		ts.push2(60);
 		
+		printStack();
+		System.out.println("\n");
+		
+		System.out.println("Top1 " + arr[top1]);
+		System.out.println("Top2 " + arr[top2]);
+		
+		pop1();
+		pop2();
+		
+		System.out.println("\n");
 		printStack();
 		System.out.println("\n");
 		
