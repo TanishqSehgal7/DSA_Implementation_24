@@ -17,7 +17,7 @@ public class StackArrayImplementation {
 	}
 	
 	public static boolean isFull() {
-		return top>size-1;
+		return top>=size-1;
 	}
 	
 	public static boolean isEmpty() {
