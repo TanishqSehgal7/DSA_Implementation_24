@@ -64,6 +64,72 @@ public class StacksQuestions {
 		return stack;
 	}
 	
+	public static Stack<Integer> pushAtBottom(Stack<Integer> stack, int x) {
+		
+		if(stack.isEmpty()) {
+			stack.push(x);
+			return stack;
+		}
+		
+		int num = stack.peek();
+		stack.pop();
+		stack = pushAtBottom(stack, x);
+		stack.push(num);
+		
+		return stack;
+	}
+	
+	public static Stack<Integer> reverseStack(Stack<Integer> stack) {
+		
+		int num = stack.peek();
+		stack.pop();
+		
+		if(stack.isEmpty()) {
+			stack.push(num);
+			return stack;
+		}
+		 
+		stack = reverseStack(stack);
+		
+		if(!stack.isEmpty()) {
+			pushAtBottom(stack, num);
+			return stack;
+		}
+		
+		return stack;
+	}
+	
+	public static Stack<Integer> sortStack(Stack<Integer> stack) {
+	
+		int num = stack.peek();
+		stack.pop();
+		
+		// base case
+		if(stack.isEmpty()) {
+			stack.push(num);
+			return stack;
+		}
+		
+		stack = sortStack(stack);
+		stack = sortedStackInsert(stack, num);
+		return stack;
+	}
+	
+	public static Stack<Integer> sortedStackInsert(Stack<Integer> stack, int x) {
+		
+		if(stack.isEmpty() || (!stack.isEmpty() && stack.peek()<x)) {
+			stack.push(x);
+			return stack;
+		}
+		
+		int num = stack.peek();
+		stack.pop();
+		
+		sortedStackInsert(stack, x);
+		stack.push(num);
+		return stack;
+	}
+ 	
 	public static void main(String[] args) {
 		String str = "Tanishq";
 		System.out.println("Reversed String: " + reverStringUsingStack(str));
@@ -82,5 +148,14 @@ public class StacksQuestions {
 		System.out.println(st);
 		st =deleteMiddleFromStack(st, 0, st.size());
 		System.out.println(st);
+		
+		int x = 30;
+		System.out.println(pushAtBottom(st,x));
+		
+		System.out.println("Top: " + st.peek());
+		
+		System.out.println(reverseStack(st));
+		
+		System.out.println(sortStack(st));
 	}
 }
