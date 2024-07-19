@@ -1,6 +1,7 @@
 package Stacks;
 
 import java.util.Scanner;
+import java.util.Stack;
 
 public class StackArrayImplementation {
 	
@@ -36,16 +37,18 @@ public class StackArrayImplementation {
 	}
 	
 	
-	public static void pop() {
+	public static int pop() {
 		
 		try {
 			if(!isEmpty()) {
 				arr[top] = -1;
 				top-=1;
+				return arr[top];
 			}
 		} catch (Exception e) {
 			System.out.println("Stack Underflow! " + e.getMessage());
 		}
+		return -1;
 	}
 	
 	public static int peek() {

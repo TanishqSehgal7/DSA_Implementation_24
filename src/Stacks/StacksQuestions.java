@@ -3,7 +3,7 @@ package Stacks;
 import java.util.Stack;
 
 public class StacksQuestions {
-	
+		
 	public static String reverStringUsingStack(String str) {
 		
 		Stack<Object> stack = new Stack<Object>();
@@ -47,6 +47,23 @@ public class StacksQuestions {
 		}
 	}
 	
+	public static Stack<Integer> deleteMiddleFromStack(Stack<Integer> stack, int count, int size) {
+		
+		// base case 
+		if(count == size/2) {
+			stack.pop();
+			return stack;
+		}
+		
+		int num = stack.peek();
+		stack.pop();
+		
+		stack = deleteMiddleFromStack(stack, count+1, size);
+		stack.push(num);
+		
+		return stack;
+	}
+	
 	public static void main(String[] args) {
 		String str = "Tanishq";
 		System.out.println("Reversed String: " + reverStringUsingStack(str));
@@ -54,5 +71,16 @@ public class StacksQuestions {
 		String parenthesis = "[()]{}{()}";
 //		String parenthesis = "[(}]";
 		System.out.println(balancedParenthesis(parenthesis));
+		
+		Stack<Integer> st = new Stack<Integer>();
+		st.push(10);
+		st.push(20);
+		st.push(30);
+		st.push(40);
+		st.push(50);
+		
+		System.out.println(st);
+		st =deleteMiddleFromStack(st, 0, st.size());
+		System.out.println(st);
 	}
 }
