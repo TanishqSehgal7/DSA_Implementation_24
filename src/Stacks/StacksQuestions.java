@@ -129,6 +129,38 @@ public class StacksQuestions {
 		stack.push(num);
 		return stack;
 	}
+	
+	public static boolean redundantBrackets(Stack<Character> stack, String exp) {
+		
+		for(int i=0;i<exp.length();i++) {
+			
+			char ch = exp.charAt(i);
+			boolean isRedundant = true;
+			
+			if(ch == '(' || ch == '+' || ch == '-' || ch == '*' || ch == '/') {
+				stack.push(ch);
+			} else {
+				
+				if(ch == ')') {
+					char top = stack.peek();
+					while(stack.peek()!='(') {
+						if(top == '+' || top == '-' || top == '*' || top == '/' ) {
+							isRedundant = false;
+						}
+						stack.pop();
+					}
+					
+					stack.pop();
+					
+					if(isRedundant) {
+						return true;
+					}
+				}
+			}
+		}
+		return false;
+	}
+	
  	
 	public static void main(String[] args) {
 		String str = "Tanishq";
@@ -157,5 +189,9 @@ public class StacksQuestions {
 		System.out.println(reverseStack(st));
 		
 		System.out.println(sortStack(st));
+		
+		Stack<Character> expressionstack = new Stack<Character>();
+		String exp = "(a+b)";
+		System.out.println(redundantBrackets(expressionstack,exp));
 	}
 }
