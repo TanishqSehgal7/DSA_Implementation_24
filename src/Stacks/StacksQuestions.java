@@ -161,6 +161,47 @@ public class StacksQuestions {
 		return false;
 	}
 	
+	
+	public static int minCostToMakeStringValid(Stack<Character> stack, String str) {
+		
+		if(str.length()%2!=0) {
+			return -1;
+		}
+		
+		for(int i=0;i<str.length();i++) {
+
+			char ch = str.charAt(i);
+
+			// if ch is an open brace then push it to stack
+			if(ch == '{') {
+				stack.push(ch);
+			} else {
+				// if ch is a closed brace
+				
+				if(!stack.isEmpty() && stack.peek() == '{') {
+					stack.pop();
+				} else {
+					stack.push(ch);
+				}
+			}
+		}
+		
+		int openBraceCount = 0;
+		int closedBranceCount = 0;
+		
+		while(!stack.isEmpty()) {
+			if(stack.peek() == '{') {
+				openBraceCount++;
+			} else {
+				closedBranceCount++;
+			}
+			stack.pop();
+		}
+		
+		int answer = (openBraceCount+1)/2 + (closedBranceCount+1)/2;
+		return answer;
+	}
+	
  	
 	public static void main(String[] args) {
 		String str = "Tanishq";
@@ -193,5 +234,10 @@ public class StacksQuestions {
 		Stack<Character> expressionstack = new Stack<Character>();
 		String exp = "(a+b)";
 		System.out.println(redundantBrackets(expressionstack,exp));
+		
+		Stack<Character> s = new Stack<Character>();
+		String bracesExp = "}}}{{{";
+		System.out.println(minCostToMakeStringValid(s,bracesExp));
+		
 	}
 }
