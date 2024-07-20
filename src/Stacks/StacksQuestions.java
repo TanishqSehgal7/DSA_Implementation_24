@@ -1,5 +1,6 @@
 package Stacks;
 
+import java.util.ArrayList;
 import java.util.Stack;
 
 public class StacksQuestions {
@@ -187,20 +188,87 @@ public class StacksQuestions {
 		}
 		
 		int openBraceCount = 0;
-		int closedBranceCount = 0;
+		int closedBraceCount = 0;
 		
 		while(!stack.isEmpty()) {
 			if(stack.peek() == '{') {
 				openBraceCount++;
 			} else {
-				closedBranceCount++;
+				closedBraceCount++;
 			}
 			stack.pop();
 		}
 		
-		int answer = (openBraceCount+1)/2 + (closedBranceCount+1)/2;
+		int answer = (openBraceCount+1)/2 + (closedBraceCount+1)/2;
 		return answer;
 	}
+	
+//	public static int[] nextSmallerElement(Stack<Integer> stack, int arr[]) {
+//		
+//		int[] result = new int[arr.length];
+//		stack.push(-1);
+//		for(int i=arr.length-1; i>=0;i--) {
+//			
+//			int element = arr[i];
+//			
+//			if(!stack.isEmpty() && stack.peek()<element) {
+//				result[i] = stack.peek();
+//				stack.push(element);
+//			} else if(!stack.isEmpty() && stack.peek()>element) {
+//				while(stack.peek()>element) {
+//					stack.pop();
+//				}
+//				if(stack.peek()<element) {
+//					result[i] = stack.peek();
+//					stack.push(element);
+//				}
+//			}
+//		}
+//		return result;
+//	}
+	
+	
+	public static int[] nextSmallerElement(Stack<Integer> stack, int arr[]) {
+		
+		int[] result = new int[arr.length];
+		stack.push(-1);
+		
+		for(int i=arr.length-1;i>=0;i--) {
+			
+			int element = arr[i];
+			
+			while(stack.peek()>element) {
+				stack.pop();
+			}
+			
+			if(!stack.isEmpty() && stack.peek()<element) {
+				result[i] = stack.peek();
+				stack.push(element);
+			}
+		}
+		
+		return result;
+	}
+	
+//	public static int[] nextSmallerElement(Stack<Integer> stack, int arr[]) {
+//		
+//		int[] result = new int[arr.length];
+//		stack.push(-1);
+//		
+//		for(int i=arr.length-1;i>=0;i--) {
+//			
+//			int element = arr[i];
+//			
+//			while(stack.peek()>element) {
+//				stack.pop();
+//			}
+//			
+//			result[i] = stack.peek();
+//			stack.push(element);
+//		}
+//		
+//		return result;
+//	}
 	
  	
 	public static void main(String[] args) {
@@ -238,6 +306,16 @@ public class StacksQuestions {
 		Stack<Character> s = new Stack<Character>();
 		String bracesExp = "}}}{{{";
 		System.out.println(minCostToMakeStringValid(s,bracesExp));
+		
+		Stack<Integer> nextSmElement = new Stack<Integer>();
+		int[] arr = {2,1,4,3};
+		
+		int[] result = nextSmallerElement(nextSmElement,arr);
+//		nextSmallerElement(nextSmElement,arr);
+		
+		for(int i=0;i<result.length;i++) {
+			System.out.print(result[i] + " ");
+		}
 		
 	}
 }
