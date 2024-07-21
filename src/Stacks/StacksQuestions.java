@@ -20,7 +20,6 @@ public class StacksQuestions {
 		return reversedString;
 	}
 	
-	
 	public static boolean balancedParenthesis(String str) {
 		
 		Stack<Character> stack = new Stack<Character>();
