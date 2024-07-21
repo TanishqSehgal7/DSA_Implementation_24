@@ -60,6 +60,11 @@ public class LargestAreaInHistogram {
 		for(int i=0;i<heights.length;i++) {
 			
 			int l = heights[i];
+			
+			if(nextSmaller[i] == -1) {
+				nextSmaller[i] = heights.length;
+			}
+			
 			int b = nextSmaller[i] - prevSmaller[i] - 1;
 			
 			int newArea = (l*b);
