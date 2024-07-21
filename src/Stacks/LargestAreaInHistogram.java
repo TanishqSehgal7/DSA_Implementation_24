@@ -61,6 +61,7 @@ public class LargestAreaInHistogram {
 			
 			int l = heights[i];
 			
+			// case when all heights are equal
 			if(nextSmaller[i] == -1) {
 				nextSmaller[i] = heights.length;
 			}
