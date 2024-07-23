@@ -16,8 +16,7 @@ public class QueueArrayImplementation {
 	
 	public static void enQueue(int data) {
 		
-		if(rear==size-1) {
-			System.out.println("Queue is Full!");
+		if(rear==size) {
 			return;
 		} else {
 			arr[rear] = data;
@@ -41,7 +40,7 @@ public class QueueArrayImplementation {
 	}
 	
 	public static void printQueue() {
-		for(int i = front; i<=rear;i++) {
+		for(int i = front; i<=rear-1;i++) {
 			System.out.println(arr[i] + " ");
 		}
 		System.out.println("\n");
