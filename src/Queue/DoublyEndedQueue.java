@@ -66,18 +66,45 @@ public class DoublyEndedQueue {
 	
 	public static void deQueueRear() {
 		
+		arr[rear] = -1;
 		// check for empty queue
 		if(front == -1) {
 			return; 
+		} else if(front == rear) { // single element
+			front = -1;
+			rear = -1;
+		} else if(rear == 0) { // cyclic nature
+			rear = size-1;
 		} else {
-			
+			rear--;
 		}
+	}
+	
+	public static void printCircularQueue() {
+		for(int i=0;i<arr.length;i++) {
+			if(arr[i]!=-1) {
+				System.out.print(arr[i] + " ");
+			}
+		}
+		System.out.println("\n");
 	}
 	
 	
 	public static void main(String[] args) {
 		
-
+		DoublyEndedQueue deq = new DoublyEndedQueue(5);
+		
+		deq.enQueueFront(10);
+		deq.enQueueFront(20);
+		deq.enQueueFront(30);
+		printCircularQueue();
+		deq.enQueueRear(40);
+		deq.enQueueRear(50);
+		printCircularQueue();
+		deq.deQueueFront();
+		printCircularQueue();
+		deq.deQueueRear();
+		printCircularQueue();
 	}
 
 }

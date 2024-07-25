@@ -54,6 +54,7 @@ public class CircularQueue {
 				System.out.print(arr[i] + " ");
 			}
 		}
+		System.out.println("\n");
 	}
 	
 
@@ -68,10 +69,8 @@ public class CircularQueue {
 		cq.enQueue(50);
 
 		printCircularQueue();
-		System.out.println("\n");
 		cq.deQueue();
 		printCircularQueue();
-		System.out.println("\n");
 		cq.enQueue(60);
 		printCircularQueue();
 	}
