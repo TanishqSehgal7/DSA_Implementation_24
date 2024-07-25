@@ -35,7 +35,6 @@ public class QueueLinkedListImplementation {
 		return (rr == size);
 	}
 	
-	
 	public static void enQueue(int data) {
 		
 		Node newNode = new Node(data);
