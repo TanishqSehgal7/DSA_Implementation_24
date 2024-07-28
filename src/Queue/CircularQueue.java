@@ -47,7 +47,6 @@ public class CircularQueue {
 		return;
 	}
 	
-	
 	public static void printCircularQueue() {
 		for(int i=0;i<arr.length;i++) {
 			if(arr[i]!=-1) {

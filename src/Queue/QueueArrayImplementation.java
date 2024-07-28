@@ -1,5 +1,7 @@
 package Queue;
 
+import java.util.Queue;
+
 public class QueueArrayImplementation {
 
 	static int front = 0;
@@ -14,6 +16,10 @@ public class QueueArrayImplementation {
 		this.arr = new int[size];
 	}
 	
+	public static int peek() {
+		return arr[front];
+	}
+	 
 	public static void enQueue(int data) {
 		
 		if(rear==size) {
@@ -38,6 +44,7 @@ public class QueueArrayImplementation {
 			}
 		}
 	}
+	
 	
 	public static void printQueue() {
 		for(int i = front; i<=rear-1;i++) {
