@@ -148,7 +148,7 @@ public class QueueQuestions {
 		int start = 0;
 		
 		for(int i=0;i<n;i++) {
-			balance = petrol[i] - distance[i];
+			balance += petrol[i] - distance[i];
 			if(balance < 0) {
 				deficit+=balance;
 				start = i+1;
@@ -163,11 +163,87 @@ public class QueueQuestions {
 		}
 	}
 	
+	public static Queue<Integer> interLeaveQueueApproach(Queue<Integer> queue) {
+		
+		Queue<Integer> helper = new LinkedList<Integer>();
+		
+		int count = 0;
+		int size = queue.size();
+		while(count<(size/2)) {
+			int val = queue.peek();
+			queue.remove();
+			helper.add(val);
+			++count;
+		}
+				
+		while(!helper.isEmpty()) {
+			int val = helper.peek();
+			helper.remove();
+			queue.add(val);
+			val = queue.peek();
+			queue.remove();
+			queue.add(val);
+		}
+		return queue;
+	}
+	
+	public static Queue<Integer> interLeaveStackApproach(Queue<Integer> queue) {
+		
+		
+		Stack<Integer> stack = new Stack<Integer>();
+		
+		int size = queue.size();
+		int count = 0;
+		
+		while(count<=size/2) {
+			int val = queue.peek();
+			queue.remove();
+			stack.push(val);
+			count++;
+		}
+		
+		while(!stack.isEmpty()) {
+			int val = stack.peek();
+			stack.pop();
+			queue.add(val);
+		}
+		
+		count = 0;
+		while(count<=size/2) {
+			int val = queue.peek();
+			queue.remove();
+			queue.add(val);
+			count++;
+		}
+		
+		count = 0;
+		while(count<=size/2) {
+			int val = queue.peek();
+			queue.remove();
+			stack.push(val);
+			count++;
+		}
+		
+		Queue<Integer> helper = new LinkedList<Integer>();
+		while(!stack.isEmpty() && !queue.isEmpty()) {
+			int val = stack.peek();
+			stack.pop();
+			helper.add(val);
+			val = queue.peek();
+			queue.remove();
+			helper.add(val);
+		}
+		
+		return helper;
+	}
+	
 
 	public static void main(String[] args) {
 		
 		Queue<Integer> queue1 = new LinkedList<Integer>();
 		Queue<Integer> queue2 = new LinkedList<Integer>();
+		Queue<Integer> queue3 = new LinkedList<Integer>();
+		Queue<Integer> queue4 = new LinkedList<Integer>();
 		
 		int[] arr = {-8,2,3,-6,10};
 		
@@ -182,6 +258,24 @@ public class QueueQuestions {
 		queue2.add(80);
 		queue2.add(90);
 		queue2.add(100);
+		
+		queue3.add(11);
+		queue3.add(12);
+		queue3.add(13);
+		queue3.add(14);
+		queue3.add(15);
+		queue3.add(16);
+		queue3.add(17);
+		queue3.add(18);
+		
+		queue4.add(11);
+		queue4.add(12);
+		queue4.add(13);
+		queue4.add(14);
+		queue4.add(15);
+		queue4.add(16);
+		queue4.add(17);
+		queue4.add(18);
 		
 		reverseQueueUsingStack(queue1);
 		System.out.println(queue1);
@@ -208,6 +302,8 @@ public class QueueQuestions {
 		int[] distance = {6,5,3,5};
 		System.out.println(circularTour(petrol, distance, petrol.length));
 		
+		System.out.println(interLeaveQueueApproach(queue3));
+		System.out.println(interLeaveStackApproach(queue3));
 	}
 
 }
