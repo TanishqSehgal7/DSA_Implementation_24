@@ -62,7 +62,27 @@ public class NQueuesInArray {
 		
 		// push element
 		arr[index] = data;
+	}
+	
+	public static int deQueue(int qNumber) {
 		
+		// check underflow condition
+		if(front[qNumber-1] == -1) {
+			System.out.println("Queue Underflow!");
+			return;
+		}
+		
+		// find index to pop
+		int index = front[qNumber-1];
+		
+		// shift front further
+		front[qNumber-1] = next[index];
+		
+		// manage free slots
+		next[index] = freeSpot;
+		freeSpot = index;
+		
+		return arr[index];
 	}
 
 	public static void main(String[] args) {
