@@ -60,6 +60,31 @@ public class NStacks {
 		return true;
 	}
 	
+	public static int pop(int sN) {
+		
+		// check for underflow condition
+		if(top[sN-1] == -1) {
+			System.out.println("Stack Underflow!");
+			return -1;
+		}
+		
+		// find index of top
+		int index = top[sN-1];
+		
+		// update top
+		top[sN-1] = next[index];
+		
+		// update next
+		next[index] = freeSpot;
+		
+		// update freeSpot
+		freeSpot = index;
+		
+		arr[index] = -1;
+		
+		return arr[index];
+	}
+	
 	
 	public static void main(String[] args) {
 		
