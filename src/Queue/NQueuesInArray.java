@@ -10,7 +10,6 @@ public class NQueuesInArray {
 	static int freeSpot;
 	static int next[];
 	
-	
 	public NQueuesInArray(int size, int k) {
 		
 		this.size = size;
@@ -69,7 +68,7 @@ public class NQueuesInArray {
 		// check underflow condition
 		if(front[qNumber-1] == -1) {
 			System.out.println("Queue Underflow!");
-			return;
+			return -1;
 		}
 		
 		// find index to pop
