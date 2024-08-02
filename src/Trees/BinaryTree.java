@@ -3,6 +3,7 @@ package Trees;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class BinaryTree {
 	
@@ -100,6 +101,52 @@ public class BinaryTree {
 		}
 	}
 	
+	public static void reverLevelOrderTraversal(Node root) {
+		
+		Queue<Node> queue = new LinkedList<Node>();
+		queue.add(root);
+		queue.add(null);
+		
+		Stack<Node> stack = new Stack<Node>();
+		
+		while(!queue.isEmpty()) {
+			
+			Node temp = queue.peek();
+			queue.remove();
+			
+			if(temp == null) {
+				
+				stack.push(temp);
+				
+				if(!queue.isEmpty()) {
+					queue.add(null);
+				}
+				
+			} else {
+				
+				stack.push(temp);
+				
+				if(temp.left!=null) {
+					queue.add(temp.left);
+				}
+				
+				if(temp.right!=null) {
+					queue.add(temp.right);
+				}
+			}
+		}
+		
+		while(!stack.isEmpty()) {
+			Node temp = stack.peek();
+			stack.pop();
+			if(temp == null) {
+				System.out.println();
+			} else {
+				System.out.print(" " + temp.data + " ");
+			}
+		}
+	}
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -110,6 +157,10 @@ public class BinaryTree {
 		System.out.println("\n");
 		
 		levelOrderTrasversalWithSeparator(root);
+		
+		System.out.println("\n");
+		
+		reverLevelOrderTraversal(root);
 	}
 
 }
