@@ -113,18 +113,15 @@ public class BinaryTree {
 			
 			Node temp = queue.peek();
 			queue.remove();
+			stack.push(temp);
 			
 			if(temp == null) {
-				
-				stack.push(temp);
 				
 				if(!queue.isEmpty()) {
 					queue.add(null);
 				}
 				
 			} else {
-				
-				stack.push(temp);
 				
 				if(temp.left!=null) {
 					queue.add(temp.left);
@@ -141,10 +138,58 @@ public class BinaryTree {
 			stack.pop();
 			if(temp == null) {
 				System.out.println();
-			} else {
+			} else  {
 				System.out.print(" " + temp.data + " ");
 			}
 		}
+	}
+	
+	public static void inOrderTraversal(Node root) {
+		
+		// LNR
+		
+		if(root == null) {
+			return;
+		}
+		
+		inOrderTraversal(root.left);
+		
+		System.out.print(root.data + " ");
+		
+		inOrderTraversal(root.right);
+		
+	}
+	
+	public static void preOrderTraversal(Node root) {
+		
+		// NLR
+		
+		if(root == null) {
+			return;
+		}
+		
+		System.out.print(root.data + " ");
+		
+		preOrderTraversal(root.left);
+		
+		preOrderTraversal(root.right);
+		
+	}
+	
+	public static void postOrderTraversal(Node root) {
+		
+		// LRN
+		
+		if(root == null) {
+			return;
+		}
+		
+		postOrderTraversal(root.left);
+		
+		postOrderTraversal(root.right);
+		
+		System.out.print(root.data + " ");
+		
 	}
 	
 	
@@ -152,15 +197,26 @@ public class BinaryTree {
 		// TODO Auto-generated method stub
 		
 		root = buildTree(root);  
+		System.out.println("\nLevel Order Traversal Without Separator:\n");
 		levelOrderTraversal(root);
 		
-		System.out.println("\n");
-		
+		System.out.println("\nLevel Order Traversal With Separator:\n");
 		levelOrderTrasversalWithSeparator(root);
 		
+		System.out.println("\nReverse Level Order Traversal:\n");
+		reverLevelOrderTraversal(root);
+		
+		System.out.println("\nInOrder Traversal:\n");
+		inOrderTraversal(root);
 		System.out.println("\n");
 		
-		reverLevelOrderTraversal(root);
+		System.out.println("\nPreOrder Traversal:\n");
+		preOrderTraversal(root);
+		System.out.println("\n");
+		
+		System.out.println("\nPostOrder Traversal:\n");
+		postOrderTraversal(root);
+		System.out.println("\n");
 	}
 
 }
