@@ -193,30 +193,67 @@ public class BinaryTree {
 	}
 	
 	
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+	public static Node buildTreeFromLevelOrder(Node root) {
 		
-		root = buildTree(root);  
-		System.out.println("\nLevel Order Traversal Without Separator:\n");
-		levelOrderTraversal(root);
+		
+		Queue<Node> queue = new LinkedList<Node>();
+		System.out.println("Enter data for root:\n");
+		int rootData = scn.nextInt();
+		root = new Node(rootData);
+		queue.add(root);
+		
+		while(!queue.isEmpty()) {
+			
+			Node temp = queue.peek();
+			queue.remove();
+			
+			System.out.println("Enter data for left of " + temp.data);
+			int leftData = scn.nextInt();
+			
+			if(leftData!=-1) {
+				temp.left = new Node(leftData);
+				queue.add(temp.left);
+			}
+			
+			System.out.println("Enter data for right of " + temp.data);
+			int rightData = scn.nextInt();
+			
+			if(rightData!=-1) {
+				temp.right = new Node(rightData);
+				queue.add(temp.right);
+			}
+		}
+		
+		return root;
+	}
+	
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub;dc
+		
+//		root = buildTree(root);  
+//		System.out.println("\nLevel Order Traversal Without Separator:\n");
+//		levelOrderTraversal(root);
+		
+		root = buildTreeFromLevelOrder(root);
 		
 		System.out.println("\nLevel Order Traversal With Separator:\n");
 		levelOrderTrasversalWithSeparator(root);
 		
-		System.out.println("\nReverse Level Order Traversal:\n");
-		reverLevelOrderTraversal(root);
-		
-		System.out.println("\nInOrder Traversal:\n");
-		inOrderTraversal(root);
-		System.out.println("\n");
-		
-		System.out.println("\nPreOrder Traversal:\n");
-		preOrderTraversal(root);
-		System.out.println("\n");
-		
-		System.out.println("\nPostOrder Traversal:\n");
-		postOrderTraversal(root);
-		System.out.println("\n");
+//		System.out.println("\nReverse Level Order Traversal:\n");
+//		reverLevelOrderTraversal(root);
+//		
+//		System.out.println("\nInOrder Traversal:\n");
+//		inOrderTraversal(root);
+//		System.out.println("\n");
+//		
+//		System.out.println("\nPreOrder Traversal:\n");
+//		preOrderTraversal(root);
+//		System.out.println("\n");
+//		
+//		System.out.println("\nPostOrder Traversal:\n");
+//		postOrderTraversal(root);
+//		System.out.println("\n");
 	}
 
 }
