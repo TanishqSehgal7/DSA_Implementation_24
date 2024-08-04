@@ -97,26 +97,35 @@ public class CountOfLeafNodes {
 	}
 	
 	
-	public static int[] calculateTreeWidthEfficient(Node root) { // O(N) approach
+	public static int[] calculateTreeWidthEfficient(Node root) { 
+		
+		// O(N) approach
 		
 		if(root == null) {
+			
 			int baseCaseResult[] = new int[2];
-			baseCaseResult[0] = 0; // store height at 0th index
-			baseCaseResult[1] = 0; // store width at 1st index
+			
+			baseCaseResult[0] = 0; // store width at 0th index
+			baseCaseResult[1] = 0; // store height at 1st index
+			
 			return baseCaseResult;
+		
 		}
 		
 		int leftSubTreeCall[] = calculateTreeWidthEfficient(root.left);
 		int rightSubTreeCall[] = calculateTreeWidthEfficient(root.right);
 		
-		int leftSubTreeAns = leftSubTreeCall[0];
-		int rightSubTreeAns = rightSubTreeCall[0];
-		int leftRightcombinationAns = leftSubTreeCall[1] +  rightSubTreeCall[1] + 1;
+		int leftSubTreeHeight = leftSubTreeCall[1];
+		int rightSubTreeHeight = rightSubTreeCall[1];
+		int leftRightcombinationAns = leftSubTreeCall[0] +  rightSubTreeCall[0] + 1;
 		
 		int ans[] = new int[2]; 		
-		ans[1] = Math.max(leftRightcombinationAns, Math.max(leftSubTreeAns, rightSubTreeAns));
-		ans[0] = Math.max(leftSubTreeAns, rightSubTreeAns) +1;
+		
+		ans[0] = Math.max(leftSubTreeCall[0], rightSubTreeCall[0]) + 1;
+		ans[1] = Math.max(leftSubTreeHeight, Math.max(rightSubTreeHeight, leftRightcombinationAns));
+		
 		return ans;
+		
 	}
 	
 	public static void main(String[] args) {
@@ -138,7 +147,8 @@ public class CountOfLeafNodes {
 		
 		cntLn.ans = new int[2];
 		cntLn.ans = calculateTreeWidthEfficient(root);
-		System.out.println("Width of Tree is: " + cntLn.ans[0]);
+		System.out.println("Height of Tree is: " + cntLn.ans[0]);
+		System.out.println("Width of Tree is: " + cntLn.ans[1]);
 	}
 
 }
