@@ -23,7 +23,6 @@ public class BinaryTree {
 		}
 	}
 	
-	
 	public static Node buildTree(Node root) {
 		
 		System.out.println("Enter data:\n");
@@ -229,31 +228,32 @@ public class BinaryTree {
 	
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub;dc
 		
 //		root = buildTree(root);  
 //		System.out.println("\nLevel Order Traversal Without Separator:\n");
-//		levelOrderTraversal(root);
-		
+
+		levelOrderTraversal(root);
+		// 10 20 30 40 50 60 70 -1 -1 -1 -1 -1 -1 -1 -1 
 		root = buildTreeFromLevelOrder(root);
 		
 		System.out.println("\nLevel Order Traversal With Separator:\n");
 		levelOrderTrasversalWithSeparator(root);
 		
+		System.out.println("\n");
+		
 //		System.out.println("\nReverse Level Order Traversal:\n");
 //		reverLevelOrderTraversal(root);
-//		
+		
 //		System.out.println("\nInOrder Traversal:\n");
 //		inOrderTraversal(root);
 //		System.out.println("\n");
-//		
+		
 //		System.out.println("\nPreOrder Traversal:\n");
 //		preOrderTraversal(root);
 //		System.out.println("\n");
-//		
+		
 //		System.out.println("\nPostOrder Traversal:\n");
 //		postOrderTraversal(root);
 //		System.out.println("\n");
 	}
-
 }
