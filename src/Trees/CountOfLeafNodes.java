@@ -105,8 +105,8 @@ public class CountOfLeafNodes {
 			
 			int baseCaseResult[] = new int[2];
 			
-			baseCaseResult[0] = 0; // store width at 0th index
-			baseCaseResult[1] = 0; // store height at 1st index
+			baseCaseResult[0] = 0; // store height at 0th index
+			baseCaseResult[1] = 0; // store width height at 1st index
 			
 			return baseCaseResult;
 		
@@ -115,8 +115,8 @@ public class CountOfLeafNodes {
 		int leftSubTreeCall[] = calculateTreeWidthEfficient(root.left);
 		int rightSubTreeCall[] = calculateTreeWidthEfficient(root.right);
 		
-		int leftSubTreeHeight = leftSubTreeCall[1];
-		int rightSubTreeHeight = rightSubTreeCall[1];
+		int leftSubTreeHeight = leftSubTreeCall[0];
+		int rightSubTreeHeight = rightSubTreeCall[0];
 		int leftRightcombinationAns = leftSubTreeCall[0] +  rightSubTreeCall[0] + 1;
 		
 		int ans[] = new int[2]; 		
@@ -128,6 +128,27 @@ public class CountOfLeafNodes {
 		
 	}
 	
+	
+	public static boolean isBalanced(Node root) { // O(n^2) solution
+		
+		// base case
+		if(root == null ) {
+			return true;
+		}
+		
+		boolean left = isBalanced(root.left);
+		boolean right = isBalanced(root.right);
+		
+		boolean heightDiff = Math.abs(calculateTreeHeight(root.left) - calculateTreeHeight(root.right)) <=1;
+		
+		if(left && right && heightDiff) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
@@ -138,6 +159,7 @@ public class CountOfLeafNodes {
 		System.out.println("Number of Leaf Nodes in Tree: " + cntLn.count);
 		// 10 20 30 -1 -1 40 -1 -1 50 60 -1 -1 70 -1 -1
 		// 10 20 30 -1 -1 40 -1 -1 50 -1 -1
+		// 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
 		
 		cntLn.height = calculateTreeHeight(root);
 		System.out.println("Height of Tree is: " + cntLn.height);
@@ -149,6 +171,8 @@ public class CountOfLeafNodes {
 		cntLn.ans = calculateTreeWidthEfficient(root);
 		System.out.println("Height of Tree is: " + cntLn.ans[0]);
 		System.out.println("Width of Tree is: " + cntLn.ans[1]);
+		
+		System.out.println("Is the given tree balanced? " + isBalanced(root));
 	}
 
 }
