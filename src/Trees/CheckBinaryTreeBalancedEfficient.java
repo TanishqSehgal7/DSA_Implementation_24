@@ -1,5 +1,7 @@
 package Trees;
 
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 import Trees.CountOfLeafNodes.Node;
@@ -9,33 +11,23 @@ public class CheckBinaryTreeBalancedEfficient {
 	static Scanner scn = new Scanner(System.in);
 	static Node root;
 	
+	static int leftHeight;
+	static int rightHeight;
+	
 	public static class MyResultContainer {
 		
 		private static boolean isBalanced;
 		private static int height;
 		
-		public MyResultContainer() {
-			this.isBalanced = false;
-			this.height = 0;
+		public MyResultContainer(boolean isBalanced, int height) {
+			this.isBalanced = isBalanced;
+			this.height = height;
 		}
-
-		public static boolean isBalanced() {
-			return isBalanced;
-		}
-
-		public static void setBalanced(boolean isBalanced) {
-			MyResultContainer.isBalanced = isBalanced;
-		}
-
-		public static int getHeight() {
-			return height;
-		}
-
-		public static void setHeight(int height) {
-			MyResultContainer.height = height;
-		}
+		
+		MyResultContainer() {
+            // Default constructor
+        }
 	}
-	
 	
 	public static class Node {
 		
@@ -49,7 +41,6 @@ public class CheckBinaryTreeBalancedEfficient {
 			this.right = null;
 		}
 	}
-	
 	
 	public static Node buildTree(Node root) {
 		
@@ -71,40 +62,89 @@ public class CheckBinaryTreeBalancedEfficient {
 		return root; 
 	}
 	
+	public static void levelOrderTrasversalWithSeparator(Node root) {
+		
+		Queue<Node> queue = new LinkedList<Node>();
+		queue.add(root);
+		queue.add(null);
+		
+		while(!queue.isEmpty()) {
+			
+			Node temp = queue.peek();
+			queue.remove();
+			
+			// temp == null represents that a particular level has been printed
+			if(temp == null) {
+				System.out.println();
+				
+				// add separator if the queue is still not empty
+				if(!queue.isEmpty()) {
+					queue.add(null);
+				}
+				
+			} else {
+				
+				System.out.print(temp.data + " ");
+				
+				// check for left node
+				if(temp.left!=null) {
+					queue.add(temp.left);
+				} 
+				if(temp.right!=null) {
+					queue.add(temp.right);
+				}
+			}
+		}
+	}
+	
 	
 	public static MyResultContainer isBalanced(Node root) {
 		
 		// base case
 		if(root == null) {
 			MyResultContainer mrc = new MyResultContainer();
-			mrc.setBalanced(true);
-			mrc.setHeight(0);
+			mrc.isBalanced = true;
+			mrc.height = 0;
 			return mrc;
 		}
 		
 		MyResultContainer left = isBalanced(root.left);
 		MyResultContainer right = isBalanced(root.right);
 		
-		boolean leftSideBalanced = left.isBalanced();
-		boolean rightSideBalanced = right.isBalanced();
+		boolean leftSideBalanced = left.isBalanced;
+		boolean rightSideBalanced = right.isBalanced;
 		
-		int leftHeight = left.getHeight();
-		int rightHeight = right.getHeight();
-		
-		boolean diff = Math.abs(leftHeight - rightHeight) <=1;
+		leftHeight = left.height;
+		rightHeight = right.height;
 		
 		MyResultContainer ans = new MyResultContainer();
 		
-		ans.setHeight(Math.max(leftHeight, rightHeight)+1);
-		
+		ans.height = (Math.max(leftHeight, rightHeight)+1);
+				
+		boolean diff = Math.abs(leftHeight - rightHeight) <= 1;
+		 
 		if(leftSideBalanced && rightSideBalanced && diff) {
-			ans.setBalanced(true);
+			ans.isBalanced = true;
 		} else {
-			ans.setBalanced(false);
+			ans.isBalanced = false;
 		}
 		
 		return ans;
-		
+	}
+	
+	public static MyResultContainer isBalanced2(Node root) {
+	    if (root == null) {
+	        return new MyResultContainer(true, 0);
+	    }
+
+	    MyResultContainer left = isBalanced(root.left);
+	    MyResultContainer right = isBalanced(root.right);
+
+//	    MyResultContainer result = new MyResultContainer(true,0);
+	    boolean isBalanced = left.isBalanced && right.isBalanced && Math.abs(left.height - right.height) <= 1;
+        int height = Math.max(left.height, right.height) + 1;
+        
+	    return new MyResultContainer(isBalanced, height);
 	}
 	
 	
@@ -114,7 +154,9 @@ public class CheckBinaryTreeBalancedEfficient {
 		
 		// 1 2 4 -1 -1 5 6 -1 -1 -1 3 -1 -1
 		
-		System.out.println("Is Tree Balanced? " + isBalanced(root).isBalanced());
+		levelOrderTrasversalWithSeparator(root);
+		
+		System.out.println("Is Tree Balanced? " + isBalanced(root).isBalanced);
 	}
 
 }

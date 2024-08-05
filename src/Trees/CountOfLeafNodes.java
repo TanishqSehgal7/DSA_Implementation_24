@@ -7,7 +7,8 @@ import Trees.BinaryTree.Node;
 public class CountOfLeafNodes {
 	
 	static Scanner scn = new Scanner(System.in);
-	static Node root;
+	static Node root1;
+	static Node root2;
 	static int count = 0;
 	static int height = 0;
 	static int width = 0;
@@ -148,31 +149,62 @@ public class CountOfLeafNodes {
 		}
 	}
 	
+	public static boolean isIdentical(Node root1, Node root2) {
+		
+		// base case
+		if(root1 == null && root2 == null) {
+			return true;
+		}
+		
+		if(root1 == null  && root2 != null) {
+			return false;
+		}
+		
+		if(root1!=null && root2 == null) {
+			return false;
+		}
+		
+		boolean leftSideCheck = isIdentical(root1.left, root2.left);
+		boolean rightSideCheck = isIdentical(root1.right,root2.right);
+		
+		boolean valueCheck = root1.data == root2.data;
+		
+		if(leftSideCheck && rightSideCheck && valueCheck) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
-		root = buildTree(root);
+		root1 = buildTree(root1);
+		root2 = buildTree(root2);
 		
 		CountOfLeafNodes cntLn = new CountOfLeafNodes();
-		cntLn.count = countOfLeafNodes(root);
+		cntLn.count = countOfLeafNodes(root1);
 		System.out.println("Number of Leaf Nodes in Tree: " + cntLn.count);
 		// 10 20 30 -1 -1 40 -1 -1 50 60 -1 -1 70 -1 -1
 		// 10 20 30 -1 -1 40 -1 -1 50 -1 -1
 		// 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
+		// 1 3 7 -1 -1 13 -1 -1 5 18 -1 -1 -1
 		
-		cntLn.height = calculateTreeHeight(root);
+		cntLn.height = calculateTreeHeight(root1);
 		System.out.println("Height of Tree is: " + cntLn.height);
 		
-		cntLn.width = calculateTreeWidth(root);
+		cntLn.width = calculateTreeWidth(root1);
 		System.out.println("Width/Diameter of Tree is: " + cntLn.width);
 		
 		cntLn.ans = new int[2];
-		cntLn.ans = calculateTreeWidthEfficient(root);
+		cntLn.ans = calculateTreeWidthEfficient(root1);
 		System.out.println("Height of Tree is: " + cntLn.ans[0]);
 		System.out.println("Width of Tree is: " + cntLn.ans[1]);
 		
-		System.out.println("Is the given tree balanced? " + isBalanced(root));
+		System.out.println("Is the given tree balanced? " + isBalanced(root1));
+		
+		System.out.println("Are Both Trees Identical? " + isIdentical(root1,root2));
 	}
 
 }
