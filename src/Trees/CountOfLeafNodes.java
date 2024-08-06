@@ -1,5 +1,6 @@
 package Trees;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Trees.BinaryTree.Node;
@@ -39,9 +40,9 @@ public class CountOfLeafNodes {
 			return null;
 		}
 		
-		System.out.println("Enter data for inserting in left:\n");
+		System.out.println("Enter data for inserting in left of: " + root.data);
 		root.left = buildTree(root.left);
-		System.out.println("Enter data for inserting in right:\n");
+		System.out.println("Enter data for inserting in right: " + root.data);
 		root.right = buildTree(root.right);
 		
 		return root; 
@@ -147,6 +148,7 @@ public class CountOfLeafNodes {
 		} else {
 			return false;
 		}
+
 	}
 	
 	public static boolean isIdentical(Node root1, Node root2) {
@@ -174,11 +176,50 @@ public class CountOfLeafNodes {
 		} else {
 			return false;
 		}
+
+	}
+	
+	
+	public static Object[] isSumTree(Node root) {
+		
+		// base case 1
+		if(root == null) {
+			Object baseResult1[] = new Object[2];
+			baseResult1[0] = true; // isSum
+			baseResult1[1] = 0; // sumValue
+		}
+		
+		// base case 2
+		if(root.left == null && root.right == null) {
+			Object baseResult2[] = new Object[2];
+			baseResult2[0] = true; // isSum
+			baseResult2[1] = root.data; // sumValue
+		}
+		
+		// leftSide Call
+		Object leftSideCall[] = isSumTree(root.left);
+		Object rightSideCall[] = isSumTree(root.right);
+		
+		boolean isLeftSumTree = (boolean) leftSideCall[0];
+		boolean isRightSumTree = (boolean) rightSideCall[0];
+		
+		int leftSum = (int) leftSideCall[1];
+		int rightSum = (int) rightSideCall[1];
+		
+		boolean sumCondition = root.data == leftSum + rightSum;
+		
+		Object result[] = new Object[2];
+		
+		if(isLeftSumTree && isRightSumTree && sumCondition) {
+			result[0] = true;
+			result[1] = (root.data + leftSum + rightSum);
+		}
+		
+		return result;
 	}
 	
 	
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 
 		root1 = buildTree(root1);
 		root2 = buildTree(root2);
@@ -190,6 +231,7 @@ public class CountOfLeafNodes {
 		// 10 20 30 -1 -1 40 -1 -1 50 -1 -1
 		// 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
 		// 1 3 7 -1 -1 13 -1 -1 5 18 -1 -1 -1
+		// 8 2 1 -1 -1 1 -1 -1 2 1 -1 -1 1 -1 -1
 		
 		cntLn.height = calculateTreeHeight(root1);
 		System.out.println("Height of Tree is: " + cntLn.height);
@@ -205,6 +247,8 @@ public class CountOfLeafNodes {
 		System.out.println("Is the given tree balanced? " + isBalanced(root1));
 		
 		System.out.println("Are Both Trees Identical? " + isIdentical(root1,root2));
+		
+		System.out.println("Is Sum Tree? " + isSumTree(root1));
 	}
 
 }

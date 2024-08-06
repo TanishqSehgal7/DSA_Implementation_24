@@ -11,24 +11,6 @@ public class CheckBinaryTreeBalancedEfficient {
 	static Scanner scn = new Scanner(System.in);
 	static Node root;
 	
-	static int leftHeight;
-	static int rightHeight;
-	
-	public static class MyResultContainer {
-		
-		private static boolean isBalanced;
-		private static int height;
-		
-		public MyResultContainer(boolean isBalanced, int height) {
-			this.isBalanced = isBalanced;
-			this.height = height;
-		}
-		
-		MyResultContainer() {
-            // Default constructor
-        }
-	}
-	
 	public static class Node {
 		
 		int data;
@@ -98,55 +80,39 @@ public class CheckBinaryTreeBalancedEfficient {
 	}
 	
 	
-	public static MyResultContainer isBalanced(Node root) {
+	public static Object[] isBalanced(Node root) {
 		
 		// base case
 		if(root == null) {
-			MyResultContainer mrc = new MyResultContainer();
-			mrc.isBalanced = true;
-			mrc.height = 0;
-			return mrc;
+			Object[] baseResult = new Object[2];
+			baseResult[0] = true;
+			baseResult[1] = 0;
+			return baseResult;
 		}
 		
-		MyResultContainer left = isBalanced(root.left);
-		MyResultContainer right = isBalanced(root.right);
+		Object[] left = isBalanced(root.left);
+		Object[] right = isBalanced(root.right);
 		
-		boolean leftSideBalanced = left.isBalanced;
-		boolean rightSideBalanced = right.isBalanced;
+		boolean leftSideBalanced = (boolean) left[0];
+		boolean rightSideBalanced = (boolean) right[0];
 		
-		leftHeight = left.height;
-		rightHeight = right.height;
+		int leftHeight = (int) left[1];
+		int rightHeight = (int) right[1];
 		
-		MyResultContainer ans = new MyResultContainer();
+		Object[] ans = new Object[2];
 		
-		ans.height = (Math.max(leftHeight, rightHeight)+1);
+		ans[0] = (Math.max(leftHeight, rightHeight)+1);
 				
 		boolean diff = Math.abs(leftHeight - rightHeight) <= 1;
 		 
 		if(leftSideBalanced && rightSideBalanced && diff) {
-			ans.isBalanced = true;
+			ans[0] = true;
 		} else {
-			ans.isBalanced = false;
+			ans[0] = false;
 		}
 		
 		return ans;
 	}
-	
-	public static MyResultContainer isBalanced2(Node root) {
-	    if (root == null) {
-	        return new MyResultContainer(true, 0);
-	    }
-
-	    MyResultContainer left = isBalanced(root.left);
-	    MyResultContainer right = isBalanced(root.right);
-
-//	    MyResultContainer result = new MyResultContainer(true,0);
-	    boolean isBalanced = left.isBalanced && right.isBalanced && Math.abs(left.height - right.height) <= 1;
-        int height = Math.max(left.height, right.height) + 1;
-        
-	    return new MyResultContainer(isBalanced, height);
-	}
-	
 	
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -156,7 +122,7 @@ public class CheckBinaryTreeBalancedEfficient {
 		
 		levelOrderTrasversalWithSeparator(root);
 		
-		System.out.println("Is Tree Balanced? " + isBalanced(root).isBalanced);
+		System.out.println("Is Tree Balanced? " + isBalanced(root)[0]);
 	}
 
 }
