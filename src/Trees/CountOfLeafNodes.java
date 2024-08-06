@@ -180,39 +180,40 @@ public class CountOfLeafNodes {
 	}
 	
 	
-	public static Object[] isSumTree(Node root) {
+	public static ArrayList<Object> isSumTree(Node root) {
 		
-		// base case 1
+		// base case
+		ArrayList<Object> baseResult = new ArrayList<Object>();
 		if(root == null) {
-			Object baseResult1[] = new Object[2];
-			baseResult1[0] = true; // isSum
-			baseResult1[1] = 0; // sumValue
+			baseResult.add(0,true);
+			baseResult.add(1,0);
 		}
 		
 		// base case 2
-		if(root.left == null && root.right == null) {
-			Object baseResult2[] = new Object[2];
-			baseResult2[0] = true; // isSum
-			baseResult2[1] = root.data; // sumValue
+		if(root!=null &&  root.left == null && root.right == null) {
+			baseResult.add(0,true);
+			baseResult.add(1,root.data);
 		}
 		
-		// leftSide Call
-		Object leftSideCall[] = isSumTree(root.left);
-		Object rightSideCall[] = isSumTree(root.right);
+		ArrayList<Object> leftSideCall = isSumTree(root.left);
+		ArrayList<Object> rightSideCall = isSumTree(root.right);
 		
-		boolean isLeftSumTree = (boolean) leftSideCall[0];
-		boolean isRightSumTree = (boolean) rightSideCall[0];
+		boolean isLeftSumTree = (boolean) leftSideCall.get(0);
+		boolean isRightSumTree = (boolean) rightSideCall.get(0);
 		
-		int leftSum = (int) leftSideCall[1];
-		int rightSum = (int) rightSideCall[1];
+		int leftSumValue = (int) leftSideCall.get(1);
+		int rightSumValue = (int) rightSideCall.get(1);
 		
-		boolean sumCondition = root.data == leftSum + rightSum;
+		boolean sumCondition = root.data == leftSumValue + rightSumValue;
 		
-		Object result[] = new Object[2];
+		ArrayList<Object> result = new ArrayList<Object>();
+		result.add(0,false);
+		result.add(1,0);
 		
 		if(isLeftSumTree && isRightSumTree && sumCondition) {
-			result[0] = true;
-			result[1] = (root.data + leftSum + rightSum);
+			result.set(0, true);
+		} else {
+			result.set(0, false);
 		}
 		
 		return result;

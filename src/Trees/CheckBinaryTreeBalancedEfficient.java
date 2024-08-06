@@ -1,5 +1,6 @@
 package Trees;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -80,35 +81,36 @@ public class CheckBinaryTreeBalancedEfficient {
 	}
 	
 	
-	public static Object[] isBalanced(Node root) {
+	public static ArrayList<Object> isBalanced(Node root) {
 		
 		// base case
 		if(root == null) {
-			Object[] baseResult = new Object[2];
-			baseResult[0] = true;
-			baseResult[1] = 0;
+			ArrayList<Object> baseResult = new ArrayList<Object>(2);
+			baseResult.add(0,true);
+			baseResult.add(1,0);
 			return baseResult;
 		}
 		
-		Object[] left = isBalanced(root.left);
-		Object[] right = isBalanced(root.right);
+		ArrayList<Object> left = isBalanced(root.left);
+		ArrayList<Object> right = isBalanced(root.right);
 		
-		boolean leftSideBalanced = (boolean) left[0];
-		boolean rightSideBalanced = (boolean) right[0];
+		boolean leftSideBalanced = (boolean) left.get(0);
+		boolean rightSideBalanced = (boolean) right.get(0);
 		
-		int leftHeight = (int) left[1];
-		int rightHeight = (int) right[1];
+		int leftHeight = (int) left.get(1);
+		int rightHeight = (int) right.get(1);
 		
-		Object[] ans = new Object[2];
-		
-		ans[0] = (Math.max(leftHeight, rightHeight)+1);
+		ArrayList<Object> ans = new ArrayList<Object>(2);
+		ans.add(0,false);
+		ans.add(1,0);
+		ans.set(0, (Math.max(leftHeight, rightHeight)+1));
 				
 		boolean diff = Math.abs(leftHeight - rightHeight) <= 1;
 		 
 		if(leftSideBalanced && rightSideBalanced && diff) {
-			ans[0] = true;
+			ans.set(0, true);
 		} else {
-			ans[0] = false;
+			ans.set(0, false);
 		}
 		
 		return ans;
@@ -122,7 +124,7 @@ public class CheckBinaryTreeBalancedEfficient {
 		
 		levelOrderTrasversalWithSeparator(root);
 		
-		System.out.println("Is Tree Balanced? " + isBalanced(root)[0]);
+		System.out.println("Is Tree Balanced? " + isBalanced(root).get(0));
 	}
 
 }
