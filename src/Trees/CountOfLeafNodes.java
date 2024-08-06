@@ -183,16 +183,18 @@ public class CountOfLeafNodes {
 	public static ArrayList<Object> isSumTree(Node root) {
 		
 		// base case
-		ArrayList<Object> baseResult = new ArrayList<Object>();
+		ArrayList<Object> result = new ArrayList<Object>();
 		if(root == null) {
-			baseResult.add(0,true);
-			baseResult.add(1,0);
+			result.add(0,true);
+			result.add(1,0);
+			return result;
 		}
 		
 		// base case 2
-		if(root!=null &&  root.left == null && root.right == null) {
-			baseResult.add(0,true);
-			baseResult.add(1,root.data);
+		if(root.left == null && root.right == null) {
+			result.add(0,true);
+			result.add(1,root.data);
+			return result;
 		}
 		
 		ArrayList<Object> leftSideCall = isSumTree(root.left);
@@ -205,20 +207,17 @@ public class CountOfLeafNodes {
 		int rightSumValue = (int) rightSideCall.get(1);
 		
 		boolean sumCondition = root.data == leftSumValue + rightSumValue;
-		
-		ArrayList<Object> result = new ArrayList<Object>();
-		result.add(0,false);
-		result.add(1,0);
-		
+				
 		if(isLeftSumTree && isRightSumTree && sumCondition) {
-			result.set(0, true);
+			result.add(0, true);
+			result.add(1, root.data + leftSumValue + rightSumValue);
 		} else {
-			result.set(0, false);
+			result.add(0, false);
+			result.add(1, root.data + leftSumValue + rightSumValue);
 		}
 		
 		return result;
 	}
-	
 	
 	public static void main(String[] args) {
 
