@@ -1,6 +1,8 @@
 package Trees;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Scanner;
 
 import Trees.BinaryTree.Node;
@@ -219,6 +221,51 @@ public class CountOfLeafNodes {
 		return result;
 	}
 	
+	public static ArrayList<Integer> zigZagTraversal(Node root) {
+		
+		Queue<Node> queue = new LinkedList<Node>();
+		ArrayList<Integer> result = new ArrayList<>();
+		
+		queue.add(root);
+		
+		// base case
+		if(root == null) {
+			return result;
+		}
+		
+		boolean leftToRight = true;
+		
+		while(!queue.isEmpty()) {
+			
+			int size = queue.size();
+			ArrayList<Integer> ans = new ArrayList<Integer>();
+			
+			for(int i=0;i<size;i++) {
+				
+				Node front = queue.peek();
+				queue.remove();
+				
+				int index = leftToRight ? i : size-i-1;
+				ans.add(i,front.data);
+				
+				if(front.left!=null) {
+					queue.add(front.left);
+				}
+				
+				if(front.right!=null) {
+					queue.add(front.right);
+				}
+			}
+			
+			leftToRight = !leftToRight;
+			
+			for(int i: ans) {
+				result.add(i);
+			}
+		}	
+		return result;
+	}
+	
 	public static void main(String[] args) {
 
 		root1 = buildTree(root1);
@@ -227,6 +274,7 @@ public class CountOfLeafNodes {
 		CountOfLeafNodes cntLn = new CountOfLeafNodes();
 		cntLn.count = countOfLeafNodes(root1);
 		System.out.println("Number of Leaf Nodes in Tree: " + cntLn.count);
+		
 		// 10 20 30 -1 -1 40 -1 -1 50 60 -1 -1 70 -1 -1
 		// 10 20 30 -1 -1 40 -1 -1 50 -1 -1
 		// 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
@@ -242,6 +290,7 @@ public class CountOfLeafNodes {
 		cntLn.ans = new int[2];
 		cntLn.ans = calculateTreeWidthEfficient(root1);
 		System.out.println("Height of Tree is: " + cntLn.ans[0]);
+		
 		System.out.println("Width of Tree is: " + cntLn.ans[1]);
 		
 		System.out.println("Is the given tree balanced? " + isBalanced(root1));
@@ -249,6 +298,13 @@ public class CountOfLeafNodes {
 		System.out.println("Are Both Trees Identical? " + isIdentical(root1,root2));
 		
 		System.out.println("Is Sum Tree? " + isSumTree(root1));
+		
+		System.out.println("\nElements in ZigZag Traversal are:\n ");
+		
+		ArrayList<Integer> zigzagResult = zigZagTraversal(root1);
+		for(int i:zigzagResult) {
+			System.out.print(i + " ");
+		}	
 	}
 
 }
