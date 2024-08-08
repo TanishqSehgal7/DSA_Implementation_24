@@ -17,6 +17,7 @@ public class CountOfLeafNodes {
 	static int height = 0;
 	static int width = 0;
 	static int ans[];
+	static ArrayList<Integer> answer = new ArrayList<Integer>(); 
 	
 	public static class Node {
 		
@@ -311,6 +312,83 @@ public class CountOfLeafNodes {
     }
 	
 	
+	public static ArrayList<Integer> printBoundaryNodes(Node root, ArrayList<Integer> ans) {
+		
+		// base case 
+		if(root == null) {
+			return ans;
+		}
+		
+		ans.add(root.data);
+		
+		// traverse left part and print nodes exclusive of leaf nodes
+		traverseLeft(root.left,ans);
+		
+		// print leaf nodes from left subtree
+		traverseLeaf(root.left,ans);
+		// print leaf nodes from right subtree
+		traverseLeaf(root.right,ans);
+		
+		// traverse right part
+		traverseRight(root.right,ans);
+		
+		return ans;
+	}
+	
+	
+	public static void traverseLeft(Node root, ArrayList<Integer> ans) {
+		
+		if((root == null) || (root.left == null && root.right == null)) {
+			return;
+		}
+		
+		// push root to ans
+		ans.add(root.data);
+		
+		// make a left call if left exists
+		if(root.left!=null) {
+			traverseLeft(root.left, ans);
+		} else {
+			// else make a right call is left part is non existent
+			traverseLeft(root.right,ans);
+		}
+	}
+	
+	public static void traverseLeaf(Node root, ArrayList<Integer> ans) {
+		
+		// base case
+		if(root == null) {
+			return;
+		}
+		
+		// leaf node condition
+		if(root.left == null && root.right == null) {
+			ans.add(root.data);
+		}
+		
+		traverseLeaf(root.left,ans);
+		traverseLeaf(root.right,ans);
+	}
+	
+	public static void traverseRight(Node root, ArrayList<Integer> ans) {
+		
+		// base case
+		if((root == null) || (root.right == null  && root.left == null)) {
+			return;
+		}
+		
+		if(root.right!=null) {
+			traverseRight(root.right,ans);
+		} else {
+			traverseRight(root.right,ans);
+		}
+		
+		ans.add(root.data);
+	}
+	 
+	
+	
+	
 	public static void main(String[] args) {
 
 		root1 = buildTree(root1);
@@ -325,6 +403,8 @@ public class CountOfLeafNodes {
 		// 1 3 7 -1 -1 11 -1 -1 5 17 -1 -1 -1
 		// 1 3 7 -1 -1 13 -1 -1 5 18 -1 -1 -1
 		// 8 2 1 -1 -1 1 -1 -1 2 1 -1 -1 1 -1 -1
+		
+		// 1 2 3 -1 -1 5 6 -1 -1 8 -1 -1 4 -1 7 -1 9 10 -1 -1 11 -1 -1
 		
 		cntLn.height = calculateTreeHeight(root1);
 		System.out.println("Height of Tree is: " + cntLn.height);
@@ -349,7 +429,15 @@ public class CountOfLeafNodes {
 		ArrayList<Integer> zigzagResult = zigZagTraversal(root1);
 		for(int i:zigzagResult) {
 			System.out.print(i + " ");
-		}	
+		}
+		
+		answer = printBoundaryNodes(root1,answer);
+		
+		System.out.println("Boundary Nodes are:\n");
+		
+		for(int i:answer) {
+			System.out.print(i + " ");
+		}
 	}
 
 }
