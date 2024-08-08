@@ -1,6 +1,7 @@
 package Trees;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -221,50 +222,94 @@ public class CountOfLeafNodes {
 		return result;
 	}
 	
+//	public static ArrayList<Integer> zigZagTraversal(Node root) {
+//		
+//		Queue<Node> queue = new LinkedList<Node>();
+//		ArrayList<Integer> result = new ArrayList<>();
+//		
+//		// base case
+//		if(root == null) {
+//			return result;
+//		}
+//		
+//		queue.add(root);
+//		
+//		boolean leftToRight = true;
+//		
+//		while(!queue.isEmpty()) {
+//			
+//			int size = queue.size();
+//			ArrayList<Integer> ans = new ArrayList<Integer>();
+//			
+//			for(int i=0;i<size;i++) {
+//				
+//				Node front = queue.peek();
+//				queue.remove();
+//				
+//				int index = leftToRight ? i : size-i-1;
+//				ans.add(index,front.data);
+//				
+//				if(front.left!=null) {
+//					queue.add(front.left);
+//				}
+//				
+//				if(front.right!=null) {
+//					queue.add(front.right);
+//				}
+//			}
+//			
+//			leftToRight = !leftToRight;
+//			
+//			for(int i: ans) {
+//				result.add(i);
+//			}
+//		}	
+//		return result;
+//	}
+	
 	public static ArrayList<Integer> zigZagTraversal(Node root) {
-		
-		Queue<Node> queue = new LinkedList<Node>();
-		ArrayList<Integer> result = new ArrayList<>();
-		
-		queue.add(root);
-		
-		// base case
-		if(root == null) {
-			return result;
-		}
-		
-		boolean leftToRight = true;
-		
-		while(!queue.isEmpty()) {
-			
-			int size = queue.size();
-			ArrayList<Integer> ans = new ArrayList<Integer>();
-			
-			for(int i=0;i<size;i++) {
-				
-				Node front = queue.peek();
-				queue.remove();
-				
-				int index = leftToRight ? i : size-i-1;
-				ans.add(i,front.data);
-				
-				if(front.left!=null) {
-					queue.add(front.left);
-				}
-				
-				if(front.right!=null) {
-					queue.add(front.right);
-				}
-			}
-			
-			leftToRight = !leftToRight;
-			
-			for(int i: ans) {
-				result.add(i);
-			}
-		}	
-		return result;
-	}
+        ArrayList<Integer> result = new ArrayList<>();
+        if (root == null) {
+            return result;
+        }
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+
+        boolean leftToRight = true;
+
+        while (!queue.isEmpty()) {
+            int size = queue.size();
+            Deque<Integer> ans = new LinkedList<>();  // Use Deque for efficient operations at both ends
+
+            for (int i = 0; i < size; i++) {
+                Node front = queue.poll();
+
+                if (leftToRight) {
+                    ans.addLast(front.data);  // Append to the end
+                } else {
+                    ans.addFirst(front.data); // Append to the front
+                }
+
+                if (front.left != null) {
+                    queue.add(front.left);
+                }
+
+                if (front.right != null) {
+                    queue.add(front.right);
+                }
+            }
+
+            leftToRight = !leftToRight;
+
+            for (int num : ans) {
+                result.add(num);
+            }
+        }
+
+        return result;
+    }
+	
 	
 	public static void main(String[] args) {
 
