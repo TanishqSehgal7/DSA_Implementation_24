@@ -152,7 +152,6 @@ public class CountOfLeafNodes {
 		} else {
 			return false;
 		}
-
 	}
 	
 	public static boolean isIdentical(Node root1, Node root2) {
@@ -180,7 +179,6 @@ public class CountOfLeafNodes {
 		} else {
 			return false;
 		}
-
 	}
 	
 	
@@ -386,9 +384,6 @@ public class CountOfLeafNodes {
 		ans.add(root.data);
 	}
 	 
-	
-	
-	
 	public static void main(String[] args) {
 
 		root1 = buildTree(root1);
@@ -433,11 +428,10 @@ public class CountOfLeafNodes {
 		
 		answer = printBoundaryNodes(root1,answer);
 		
-		System.out.println("Boundary Nodes are:\n");
+		System.out.println("\n\nBoundary Nodes are:\n");
 		
 		for(int i:answer) {
 			System.out.print(i + " ");
 		}
 	}
-
 }
