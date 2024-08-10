@@ -146,6 +146,54 @@ public class VerticalTreeTraversal {
 		return res;
 	}
 	
+	
+	public static List<List<Integer>> bottomView(Node root) {
+		
+//		HashMap<Integer, ArrayList<Integer>> result = new HashMap<Integer, ArrayList<Integer>>();
+		// A treemap would be preferred since is orders the keys in natural ascending order and 
+		// we need the horizontal distance in ascending order only from -ve to +ve in a sorted manner
+		
+		TreeMap<Integer,ArrayList<Integer>> result = new TreeMap<>();
+		
+		Queue<Pair> queue =  new LinkedList<Pair>();
+		
+		// push root at horizontal distance 0 in queue
+		queue.add(new Pair(root,0));
+		
+		while(!queue.isEmpty()) {
+			
+			Pair temp = queue.poll(); // this contains horizontal distance and node
+			Node tempNode = temp.node; // node obtained from temp
+			int hd = temp.horizontalDistance; // horizontal distance obtained from temp
+			
+			// add root node to treemap corresponding to horizontalDistance = 0
+			
+			if(result.containsKey(hd)) {
+				result.replace(hd, new ArrayList<Integer>()).add(tempNode.data);
+			} else {
+				result.computeIfAbsent(hd, k -> new ArrayList<Integer>()).add(tempNode.data);
+			}
+			
+			if(tempNode.left!=null) {
+				queue.add(new Pair(tempNode.left, hd-1));
+			}
+			
+			if(tempNode.right!=null) {
+				queue.add(new Pair(tempNode.right,hd+1));
+			}
+		}
+		
+		// put all the lists stored in resulting treemap in a list of lists
+		
+		List<List<Integer>> res = new ArrayList<>();
+		
+		for(Map.Entry<Integer, ArrayList<Integer>> entry: result.entrySet()) {
+			res.add(entry.getValue());
+		}
+		
+		return res;
+	}
+	
 	public static void levelOrderTraversal(Node root) {
 		
 		Queue<Node> queue = new LinkedList<Node>();
@@ -180,6 +228,7 @@ public class VerticalTreeTraversal {
 		
 		List<List<Integer>> verticalOrder = verticalTraversal(root);
 		List<List<Integer>> topLevelView = topLevelView(root);
+		List<List<Integer>> bottomView = bottomView(root);
 		
 		for(List<Integer> nodelist : verticalOrder) {
 			for(int i: nodelist) {
@@ -190,6 +239,14 @@ public class VerticalTreeTraversal {
 		System.out.println("\n\nNodes as per Top View are:\n");
 		
 		for(List<Integer> nodelist : topLevelView) {
+			for(int i: nodelist) {
+				System.out.print(i + " ");
+			}
+		}
+		
+		System.out.println("\n\nNodes as per Top View are:\n");
+		
+		for(List<Integer> nodelist : bottomView) {
 			for(int i: nodelist) {
 				System.out.print(i + " ");
 			}
