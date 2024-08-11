@@ -16,6 +16,10 @@ import java.util.TreeMap;
 public class VerticalTreeTraversal {
 
 	static Node root;
+	static ArrayList<Integer> leftViewOfBinaryTree = new ArrayList<>();
+	static ArrayList<Integer> rightViewOfBinaryTree = new ArrayList<>();
+	static int levelLeft = 0;
+	static int levelRight = 0;
 	static Scanner scn = new Scanner(System.in);
 	
 	public static class Node {
@@ -188,6 +192,42 @@ public class VerticalTreeTraversal {
         return bottomViewList;
 	}
 	
+	
+	public static ArrayList<Integer> leftView(Node root, int level) {
+		
+		
+		if(root == null) {
+			return leftViewOfBinaryTree;
+		}
+		
+		if(level == leftViewOfBinaryTree.size()) { // entered a new level
+			leftViewOfBinaryTree.add(root.data);
+		}
+		
+		leftView(root.left,level+1);
+		leftView(root.right,level+1);
+		
+		return leftViewOfBinaryTree;
+	}
+	
+	public static ArrayList<Integer> rightView(Node root, int level) {
+		
+		
+		if(root == null) {
+			return rightViewOfBinaryTree;
+		}
+		
+		if(level == rightViewOfBinaryTree.size()) { // entered a new level
+			rightViewOfBinaryTree.add(root.data);
+		}
+		
+		rightView(root.right,level+1);
+		rightView(root.left,level+1);
+		
+		return rightViewOfBinaryTree;
+	}
+	
+	
 	public static void levelOrderTraversal(Node root) {
 		
 		Queue<Node> queue = new LinkedList<Node>();
@@ -220,10 +260,13 @@ public class VerticalTreeTraversal {
 		// 1 2 4 -1 -1 5 -1 -1 3 6 -1 8 -1 -1 7 -1 9 -1 -1
 		// 1 2 4 -1 -1 5 -1 -1 3 6 -1 -1 7 -1 -1
 		// 10 20 40 -1 -1 60 -1 -1 30 -1 -1
+		// 1 2 3 -1 -1 4 -1 7 -1 -1 5 -1 6 -1 8 -1 9 -1 -1
 		
 		List<List<Integer>> verticalOrder = verticalTraversal(root);
 		List<List<Integer>> topLevelView = topLevelView(root);
 		List<Integer> bottomView = bottomView(root);
+		List<Integer> leftView = leftView(root,levelLeft);
+		List<Integer> rightView = rightView(root,levelRight);
 		
 		for(List<Integer> nodelist : verticalOrder) {
 			for(int i: nodelist) {
@@ -242,6 +285,21 @@ public class VerticalTreeTraversal {
 		System.out.println("\n\nNodes as per Bottom View are:\n");
 		
 		for(int i: bottomView) {
+			System.out.print(i + " ");
+		}
+		
+		System.out.println("\n\nNodes as per Left View are:\n");
+		for(int i: leftView) {
+			System.out.print(i + " ");
+		}
+		
+		System.out.println("\n\nNodes as per Left View are:\n");
+		for(int i: leftView) {
+			System.out.print(i + " ");
+		}
+		
+		System.out.println("\n\nNodes as per Right View are:\n");
+		for(int i: rightView) {
 			System.out.print(i + " ");
 		}
 	}
