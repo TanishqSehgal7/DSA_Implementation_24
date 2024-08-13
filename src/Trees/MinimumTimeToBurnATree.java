@@ -75,12 +75,57 @@ public class MinimumTimeToBurnATree {
 			}
 		}
 		
+		return result;
+		
 	}
 	
 	
-	public static void burnTree(Node targetNode, HashMap<Node,Node> nodeToParent) {
+	public static int burnTree(Node root, HashMap<Node,Node> nodeToParent) {
 		
 		
+		HashMap<Node, Boolean> visited = new HashMap<>();
+		
+		Queue<Node> queue = new LinkedList<>();
+		queue.add(root);
+		visited.put(root, true);
+		
+		int ans = 0;
+		
+		while(!queue.isEmpty()) {
+			
+			boolean isSomethingAddedToQueue = false;
+			int size = queue.size();
+			
+			for(int i = 0; i<size; i++) {
+				
+				// process neighbouring nodes
+				Node front = queue.poll();
+				
+				if(front.left!=null && !visited.get(front.left)) {
+					isSomethingAddedToQueue = true;
+					queue.add(front.left);
+					visited.put(front.left, true);
+				}
+				
+				if(front.right!=null && !visited.get(front.right)) {
+					isSomethingAddedToQueue = true;
+					queue.add(front.right);
+					visited.put(front.right, true);
+				}
+				
+				if(nodeToParent.containsKey(front) && !visited.get(nodeToParent.get(front))) {
+					isSomethingAddedToQueue = true;
+					queue.add(nodeToParent.get(front));
+					visited.put(nodeToParent.get(front),true);
+				}
+			}
+			
+			if(isSomethingAddedToQueue == true) {
+				ans++;
+			}
+		}
+		
+		return ans;
 	}
 	
 	
@@ -92,17 +137,21 @@ public class MinimumTimeToBurnATree {
 			Step3: Burn the tree in min time
 		*/
 		
-		int minTime = 0;
 		HashMap<Node,Node> nodeToParent = new HashMap<>();
 		Node targetNode = createParentMapping(root, target, nodeToParent);
-		burnTree(targetNode,nodeToParent);
+		int minTime = burnTree(targetNode,nodeToParent);
+		
+		return minTime;
 	}
 	
 
 	public static void main(String[] args) {
 		
-		
-
+		root = buildTree(root);
+		// 1 2 4 -1 -1 5 7 -1 -1 8 -1 -1 3 -1 6 -1 9 -1 10 -1 -1
+		int target = 3;
+		int minTime = minimumTimeToBurnTree(root,target);
+		System.out.println("Min Time = " + minTime);
 	}
 
 }
