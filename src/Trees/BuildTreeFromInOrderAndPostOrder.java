@@ -47,11 +47,11 @@ public class BuildTreeFromInOrderAndPostOrder {
 		// find position of element from inOrder Array
 		int positionOfRootFromInOrder = map.get(element);
 		
-		// left call
-		node.left = solve(inOrder, postOrder, postOrderIndex, inOrderStart, positionOfRootFromInOrder-1, size, map);
-		
 		// right call
 		node.right = solve(inOrder, postOrder, postOrderIndex, positionOfRootFromInOrder+1, inOrderEnd, size, map);
+		
+		// left call
+		node.left = solve(inOrder, postOrder, postOrderIndex, inOrderStart, positionOfRootFromInOrder-1, size, map);
 		
 		return node;
 	}
@@ -77,7 +77,6 @@ public class BuildTreeFromInOrderAndPostOrder {
 		printTree(root.right);
 		System.out.print(root.data + " ");
 	}
-	
 	
 	public static void main(String[] args) {
 		
