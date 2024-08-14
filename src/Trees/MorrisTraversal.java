@@ -97,13 +97,59 @@ public class MorrisTraversal {
 			}
 		}
 	}
+	
+	
+	public static Node flattenABinaryTree(Node root) {
+		
+		Node current = root;
+		Node prev = null;
+		
+		while(current!=null) {
+			
+			// check if left part exists
+			if(root.left!=null) {
+				
+				prev = current.left;
+				
+				while(prev.right!=null) { // find the predecessor node
+					prev = prev.right; 
+				}
+				
+				prev.right = current.right; // attach predecessor.right = current.right
+				current.right = current.left;
+				current.left = null;
+			}
+			current = current.right; // move further to new value of current
+		}
+		
+		return root;
+	}
+	
+	
+	public static void printTree(Node root) {
+		
+		if(root == null) {
+			return;
+		}
+		
+		System.out.print(root.data + " ");
+		printTree(root.left);
+		printTree(root.right);
+	}
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
 		root = buildTree(root);
 		// 1 2 4 -1 7 -1 -1 5 -1 -1 3 -1 6 -1 -1
+		// 1 2 3 -1 -1 4 -1 -1 5 -1 6 -1 -1
 		
 		morrisTraversal(root);
+		
+		root = flattenABinaryTree(root);
+		
+		System.out.println("\n\nFlattened Binary Tree\n");
+		printTree(root);
 	}
 }
