@@ -1,5 +1,6 @@
 package Trees;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import Trees.BinaryTree.Node;
@@ -36,9 +37,10 @@ public class MorrisTraversal {
 			return null;
 		}
 		
-		System.out.println("Enter data for inserting in left:\n");
+		System.out.println("Enter data for inserting in left of " + root.data);
 		root.left = buildTree(root.left);
-		System.out.println("Enter data for inserting in right:\n");
+		
+		System.out.println("Enter data for inserting in right of " + root.data);
 		root.right = buildTree(root.right);
 		
 		return root; 
@@ -48,39 +50,49 @@ public class MorrisTraversal {
 		
 		// move once towards left and then keep moving towards right till node.right becomes null
 		
-		node = node.left;
+		Node predecessor = node.left;
 		
-		while(node.right!=null) {
-			node = node.right;
+		while(predecessor.right!=null && predecessor.right!=node) {
+			predecessor = predecessor.right;
 		}
 		
-		return node;
+		return predecessor;
 	}
 	
 	
 	public static void morrisTraversal(Node root) {
 		
 		Node current = root;
+		Node predecessor = null;
 	
 		while(current!=null) {
 			
 			// check if left of current is null, print the node and send current to left
-			if(current.left == null && current.right!=null) {
-				
+			if(current.left == null) {
+
 				System.out.print(current.data + " ");
 				current = current.right;
-			
+	
 			} else { // in this case left exists, so we find predecessor
 				
-				Node predecessor = findPredecessor(current);
+				predecessor = findPredecessor(current);
 				// check if predecessor.right is null? if yes then point predecessor.right = current and move current to its left
-				if(predecessor.right == null) { // this step is for making temporary link to parent of predecessor
+				
+				if(predecessor.right == null) { 
+					
+					// this step is for making temporary link to parent of predecessor
+					
 					predecessor.right = current;
 					current = current.left;
-				} else { // print the current node and remove the temporary link here and move current to right
+				
+				} else { 
+					
+					// print the current node and remove the temporary link here and move current to right
+					
 					predecessor.right = null;
 					System.out.print(current.data + " ");
 					current = current.right;
+				
 				}
 			}
 		}
@@ -91,8 +103,7 @@ public class MorrisTraversal {
 		
 		root = buildTree(root);
 		// 1 2 4 -1 7 -1 -1 5 -1 -1 3 -1 6 -1 -1
+		
 		morrisTraversal(root);
-
 	}
-
 }
