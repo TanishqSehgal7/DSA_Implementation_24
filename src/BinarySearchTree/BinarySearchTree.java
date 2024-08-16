@@ -53,6 +53,50 @@ public class BinarySearchTree {
 		return root;
 	}
 	
+	public static boolean searchInBST(Node root, int x) {
+		
+		/*
+			recursive solution has o(height) complexity for most case but has o(n) complexity for skew tree
+			we can have an iterative solution to have constant complexity
+		*/
+		
+		// base case
+		if(root == null) {
+			return false;
+		}
+		
+		if(root.data == x) {
+			return true;
+		}
+		
+		if(x > root.data) {
+			return searchInBST(root.right, x);
+		} else {
+			return searchInBST(root.left, x);
+		}
+ 	}
+	
+	
+	public static boolean searchInBstEfficient(Node root, int x) {
+		
+		Node temp = root;
+		
+		while(temp!=null) {
+			
+			if(x>temp.data) {
+				temp = temp.right;
+			} else {
+				temp = temp.left;
+			}
+			
+			if(temp.data == x) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	
 	public static void levelOrderTraversal(Node root) {
 		
@@ -90,6 +134,10 @@ public class BinarySearchTree {
 	public static void main(String args[]) {
 		root = takeInput(root);
 		levelOrderTraversal(root);
+		
+		System.out.println(searchInBST(root,70));
+		
+		System.out.println("\n" + searchInBstEfficient(root,70));
 	}
 	
 }
