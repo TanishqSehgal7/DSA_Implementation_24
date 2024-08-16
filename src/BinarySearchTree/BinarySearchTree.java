@@ -4,6 +4,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
+import BinaryTrees.BinaryTree.Node;
+
 public class BinarySearchTree {
 	
 	static Node root;
@@ -98,6 +100,29 @@ public class BinarySearchTree {
 	}
 	
 	
+	public static int findMinValueInBST(Node root) {
+		
+		Node temp = root;
+		
+		while(temp.left!=null) {
+			temp = temp.left;
+		}
+		
+		return temp.data;
+	}
+	
+	public static int findMaxValueInBST(Node root) {
+		
+		Node temp = root;
+		
+		while(temp.right!=null) {
+			temp = temp.right;
+		}
+		
+		return temp.data;
+	}
+	
+	
 	public static void levelOrderTraversal(Node root) {
 		
 		Queue<Node> queue = new LinkedList<Node>();
@@ -131,13 +156,72 @@ public class BinarySearchTree {
 		}
 	}
 	
+	public static void inOrderTraversal(Node root) {
+		
+		// LNR
+		
+		if(root == null) {
+			return;
+		}
+		
+		inOrderTraversal(root.left);
+		
+		System.out.print(root.data + " ");
+		
+		inOrderTraversal(root.right);
+		
+	}
+	
+	public static void preOrderTraversal(Node root) {
+		
+		// NLR
+		
+		if(root == null) {
+			return;
+		}
+		
+		System.out.print(root.data + " ");
+		
+		preOrderTraversal(root.left);
+		
+		preOrderTraversal(root.right);
+		
+	}
+	
+	public static void postOrderTraversal(Node root) {
+		
+		// LRN
+		
+		if(root == null) {
+			return;
+		}
+		
+		postOrderTraversal(root.left);
+		
+		postOrderTraversal(root.right);
+		
+		System.out.print(root.data + " ");
+		
+	}
+	
 	public static void main(String args[]) {
+		
 		root = takeInput(root);
 		levelOrderTraversal(root);
 		
-		System.out.println(searchInBST(root,70));
+		System.out.println("\n\nInOrder:\n");
+		inOrderTraversal(root);
 		
+		System.out.println("\n\nPreOrder:\n");
+		preOrderTraversal(root);
+		
+		System.out.println("\n\nPostOrder:\n");
+		postOrderTraversal(root);
+		
+		System.out.println("\n"+searchInBST(root,70));
 		System.out.println("\n" + searchInBstEfficient(root,70));
+		System.out.println("\nMin Value: " + findMinValueInBST(root));
+		System.out.println("\nMax Value: " + findMaxValueInBST(root));
 	}
 	
 }
