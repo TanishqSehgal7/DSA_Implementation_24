@@ -1,4 +1,4 @@
-package Trees;
+package BinaryTrees;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import Trees.BinaryTree.Node;
+import BinaryTrees.BinaryTree.Node;
 
 import java.util.Queue;
 import java.util.Scanner;

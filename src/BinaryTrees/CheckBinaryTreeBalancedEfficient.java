@@ -1,11 +1,11 @@
-package Trees;
+package BinaryTrees;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-import Trees.CountOfLeafNodes.Node;
+import BinaryTrees.CountOfLeafNodes.Node;
 
 public class CheckBinaryTreeBalancedEfficient {
 	

@@ -1,11 +1,11 @@
-package Trees;
+package BinaryTrees;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-import Trees.BinaryTree.Node;
+import BinaryTrees.BinaryTree.Node;
 
 
 public class MinimumTimeToBurnATree {

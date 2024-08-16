@@ -1,4 +1,4 @@
-package Trees;
+package BinaryTrees;
 
 import java.util.ArrayList;
 import java.util.Deque;
@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
 
-import Trees.BinaryTree.Node;
+import BinaryTrees.BinaryTree.Node;
 
 public class CountOfLeafNodes {
 	

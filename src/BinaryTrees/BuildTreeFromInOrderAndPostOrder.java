@@ -1,9 +1,10 @@
-package Trees;
+package BinaryTrees;
 
 import java.util.HashMap;
 
-public class BuildTreeUsingPreOrderAndInOrder {
-	
+
+public class BuildTreeFromInOrderAndPostOrder {
+
 	static Node root;
 	static HashMap<Integer, Integer> referenceMap = new HashMap<Integer, Integer>();
 	
@@ -30,15 +31,15 @@ public class BuildTreeUsingPreOrderAndInOrder {
 	}
 	
 	
-	public static Node solve(int[] inOrder, int[] preOrder, int[] preOrderIndex, int inOrderStart, int inOrderEnd, int size, HashMap<Integer, Integer> map) {
+	public static Node solve(int[] inOrder, int[] postOrder, int[] postOrderIndex, int inOrderStart, int inOrderEnd, int size, HashMap<Integer, Integer> map) {
 		
 		// base case
-		if((preOrderIndex[0] > size-1) || inOrderStart > inOrderEnd) {
+		if((postOrderIndex[0] < 0) || inOrderStart > inOrderEnd) {
 			return null;
 		}
 		
 		// get element from preOrder Index
-		int element = preOrder[preOrderIndex[0]++];
+		int element = postOrder[postOrderIndex[0]--];
 		
 		// create a node
 		Node node = new Node(element);
@@ -46,23 +47,23 @@ public class BuildTreeUsingPreOrderAndInOrder {
 		// find position of element from inOrder Array
 		int positionOfRootFromInOrder = map.get(element);
 		
-		// left call
-		node.left = solve(inOrder, preOrder, preOrderIndex, inOrderStart, positionOfRootFromInOrder-1, size, map);
-		
 		// right call
-		node.right = solve(inOrder, preOrder, preOrderIndex, positionOfRootFromInOrder+1, inOrderEnd, size, map);
+		node.right = solve(inOrder, postOrder, postOrderIndex, positionOfRootFromInOrder+1, inOrderEnd, size, map);
+		
+		// left call
+		node.left = solve(inOrder, postOrder, postOrderIndex, inOrderStart, positionOfRootFromInOrder-1, size, map);
 		
 		return node;
 	}
-
 	
-	public static Node buildTree(int[] inOrder, int[] preOrder, int size) {
+	
+	public static Node buildTree(int[] inOrder, int[] postOrder, int size) {
 		
-		int[] preOrderIndex = {0};
+		int[] postOrderIndex = {size-1};
 		referenceMap = createMapping(inOrder, referenceMap, size);
 		
-//		solve(inOrder, preOrder, preOrderIndex, inOrderStart, inOrderEnd, size, map);
-		Node ans = solve(inOrder, preOrder, preOrderIndex, 0, size-1, size, referenceMap);
+//		solve(inOrder, postOrder, postOrderIndex, inOrderStart, inOrderEnd, size, map);
+		Node ans = solve(inOrder, postOrder, postOrderIndex, 0, size-1, size, referenceMap);
 		return ans;
 	}
 	
@@ -73,16 +74,16 @@ public class BuildTreeUsingPreOrderAndInOrder {
 		}
 		
 		printTree(root.left);
-		System.out.print(root.data + " ");
 		printTree(root.right);
+		System.out.print(root.data + " ");
 	}
 	
 	public static void main(String[] args) {
 		
-		int[] inOrder = {3,1,4,0,5,2};
-		int[] preOrder = {0,1,3,4,2,5};
+		int[] inOrder = {4,8,2,5,1,6,3,7};
+		int[] postOrder = {8,4,5,2,6,7,3,1};
 		
-		root = buildTree(inOrder,preOrder,inOrder.length);
+		root = buildTree(inOrder,postOrder,inOrder.length);
 		printTree(root);
 	}
 
