@@ -59,7 +59,7 @@ public class BinarySearchTree {
 		
 		/*
 			recursive solution has o(height) complexity for most case but has o(n) complexity for skew tree
-			we can have an iterative solution to have constant complexity
+			we can have an iterative solution to have better complexity
 		*/
 		
 		// base case
@@ -204,6 +204,64 @@ public class BinarySearchTree {
 		
 	}
 	
+	
+	public static int  findInOrderSuccessor(Node root, int x) {
+		
+		// base case
+		if(root == null) {
+			return -1;
+		}
+		
+		Node successor = null;
+		Node temp = root;
+		
+		while(temp!=null) {
+			
+			System.out.println("Temp is: " + temp.data);
+			
+			if(x < temp.data) {
+				successor = temp;
+				temp = temp.left;
+			} else {
+				temp = temp.right;
+			}
+		}
+		
+		if(successor!=null) {
+			return successor.data;
+		} else {
+			return -1;
+		}
+	}
+	
+	
+	public static int findInOrderPredecessor(Node root, int x) {
+		
+		if(root == null) {
+			return -1;
+		}
+		
+		Node predecessor = null;
+		Node temp = root;
+		
+		while(temp!=null) {
+			
+			if(x > temp.data) {
+				predecessor = temp;
+				temp = temp.right;
+			} else {
+				temp = temp.left;
+			}
+		}
+		
+		if(predecessor!=null) {
+			return predecessor.data;
+		} else {
+			return -1;
+		}
+	}
+	
+	
 	public static void main(String args[]) {
 		
 		root = takeInput(root);
@@ -222,6 +280,10 @@ public class BinarySearchTree {
 		System.out.println("\n" + searchInBstEfficient(root,70));
 		System.out.println("\nMin Value: " + findMinValueInBST(root));
 		System.out.println("\nMax Value: " + findMaxValueInBST(root));
+		
+		int x = 50;
+		System.out.println("\nIn Order successor of " + x + " is: " + findInOrderSuccessor(root,x));
+		System.out.println("\nIn Order predecessor of " + x + " is: " + findInOrderPredecessor(root,x));
 	}
 	
 }
