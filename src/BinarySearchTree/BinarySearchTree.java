@@ -25,7 +25,6 @@ public class BinarySearchTree {
 		}
 	}
 	
-	
 	public static Node takeInput(Node root) {
 		
 		System.out.println("Enter the data:");
@@ -78,7 +77,6 @@ public class BinarySearchTree {
 		}
  	}
 	
-	
 	public static boolean searchInBstEfficient(Node root, int x) {
 		
 		Node temp = root;
@@ -98,7 +96,6 @@ public class BinarySearchTree {
 		
 		return false;
 	}
-	
 	
 	public static int findMinValueInBST(Node root) {
 		
@@ -205,11 +202,11 @@ public class BinarySearchTree {
 	}
 	
 	
-	public static int  findInOrderSuccessor(Node root, int x) {
+	public static Node findInOrderSuccessor(Node root, int x) {
 		
 		// base case
 		if(root == null) {
-			return -1;
+			return null;
 		}
 		
 		Node successor = null;
@@ -228,17 +225,17 @@ public class BinarySearchTree {
 		}
 		
 		if(successor!=null) {
-			return successor.data;
+			return successor;
 		} else {
-			return -1;
+			return null;
 		}
 	}
 	
 	
-	public static int findInOrderPredecessor(Node root, int x) {
+	public static Node findInOrderPredecessor(Node root, int x) {
 		
 		if(root == null) {
-			return -1;
+			return null;
 		}
 		
 		Node predecessor = null;
@@ -255,14 +252,72 @@ public class BinarySearchTree {
 		}
 		
 		if(predecessor!=null) {
-			return predecessor.data;
+			return predecessor;
 		} else {
-			return -1;
+			return null;
 		}
 	}
 	
 	
+	public static Node deleteFromBST(Node root, int x) {
+		
+		// base case 1 -> root is null
+		if(root == null) {
+			return root;
+		}
+		 
+		// base case 2 -> root.dat == x
+		if(root.data == x) { // implement delete node logic here
+			
+			// 0 child
+			if(root.left == null && root.right == null) {
+				root = null;
+				return null;
+			}
+			
+			
+			if(root.left != null && root.right == null) { // left child only
+				
+				Node temp = root.left;
+				root = null;
+				return temp;
+				
+			} else if(root.right!=null && root.left == null) { // right child only
+				
+				Node temp = root.right;
+				root = null;
+				return temp;
+				
+			} else if(root.right!=null && root.left!=null) {
+				
+//				Node predecessor = findInOrderPredecessor(root,root.data);
+				Node successor = findInOrderSuccessor(root, root.data);
+				
+				// Copy the successor's data to the root
+	            root.data = successor.data;
+	            
+	            // Delete the successor node from the right subtree
+	            root.right = deleteFromBST(root.right, successor.data);
+			}
+			
+			// both left and right child
+		} else if(root.data > x) { // traverse in left part in this case
+		
+			root.left = deleteFromBST(root.left, x);
+			
+		} else { // traverse in right part in this case
+			
+			root.right = deleteFromBST(root.right, x);
+
+		}
+		return root;
+	}
+	
+	
 	public static void main(String args[]) {
+		
+		// 21 10 50 5 15 40 60 55 70 -1
+		// 100 50 110 25 70 120 60 115 -1
 		
 		root = takeInput(root);
 		levelOrderTraversal(root);
@@ -284,6 +339,9 @@ public class BinarySearchTree {
 		int x = 50;
 		System.out.println("\nIn Order successor of " + x + " is: " + findInOrderSuccessor(root,x));
 		System.out.println("\nIn Order predecessor of " + x + " is: " + findInOrderPredecessor(root,x));
+		
+		root = deleteFromBST(root,x);
+		levelOrderTraversal(root);
 	}
 	
 }
