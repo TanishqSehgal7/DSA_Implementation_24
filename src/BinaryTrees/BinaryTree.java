@@ -5,6 +5,8 @@ import java.util.Queue;
 import java.util.Scanner;
 import java.util.Stack;
 
+import BinarySearchTree.BinarySearchTree.Node;
+
 public class BinaryTree {
 	
 	static Scanner scn = new Scanner(System.in);
@@ -226,20 +228,39 @@ public class BinaryTree {
 		return root;
 	}
 	
+	public static boolean isBSTValid(Node root, int min, int max) {
+		
+		// base case
+		if(root == null) {
+			return true;
+		}
+		
+		if(root.data >=min && root.data<=max) {
+			
+			boolean leftCall = isBSTValid(root.left, min, root.data);
+			boolean rightCall = isBSTValid(root.right, root.data, max);
+			return leftCall && rightCall;
+		} else {
+			return false;
+		}
+	}
+	
 	
 	public static void main(String[] args) {
 		
-//		root = buildTree(root);  
-//		System.out.println("\nLevel Order Traversal Without Separator:\n");
+		root = buildTree(root);  
+		System.out.println("\nLevel Order Traversal Without Separator:\n");
 
-		levelOrderTraversal(root);
+//		levelOrderTraversal(root);
 		// 10 20 30 40 50 60 70 -1 -1 -1 -1 -1 -1 -1 -1 
-		root = buildTreeFromLevelOrder(root);
+//		root = buildTreeFromLevelOrder(root);
 		
 		System.out.println("\nLevel Order Traversal With Separator:\n");
 		levelOrderTrasversalWithSeparator(root);
 		
 		System.out.println("\n");
+		
+		System.out.println(isBSTValid(root,Integer.MIN_VALUE, Integer.MAX_VALUE));
 		
 //		System.out.println("\nReverse Level Order Traversal:\n");
 //		reverLevelOrderTraversal(root);

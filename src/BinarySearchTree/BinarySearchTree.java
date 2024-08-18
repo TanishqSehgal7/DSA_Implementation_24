@@ -314,10 +314,29 @@ public class BinarySearchTree {
 	}
 	
 	
+	public static boolean isBSTValid(Node root, int min, int max) {
+		
+		// base case
+		if(root == null) {
+			return true;
+		}
+		
+		if(root.data >=min && root.data<=max) {
+			
+			boolean leftCall = isBSTValid(root.left, min, root.data);
+			boolean rightCall = isBSTValid(root.right, root.data, max);
+			return leftCall && rightCall;
+		} else {
+			return false;
+		}
+	}
+	
+	
 	public static void main(String args[]) {
 		
 		// 21 10 50 5 15 40 60 55 70 -1
 		// 100 50 110 25 70 120 60 115 -1
+		// 100 200 110 25 70 120 60 115 -1
 		
 		root = takeInput(root);
 		levelOrderTraversal(root);
@@ -342,6 +361,8 @@ public class BinarySearchTree {
 		
 		root = deleteFromBST(root,x);
 		levelOrderTraversal(root);
+		
+		System.out.println(isBSTValid(root,Integer.MIN_VALUE, Integer.MAX_VALUE));
 	}
 	
 }
