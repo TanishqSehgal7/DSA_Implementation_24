@@ -93,7 +93,6 @@ public class BinarySearchTree {
 				return true;
 			}
 		}
-		
 		return false;
 	}
 	
@@ -331,12 +330,34 @@ public class BinarySearchTree {
 		}
 	}
 	
+	public static int findKthSmallestElement(Node root, int k, int[] cnt) {
+		
+		// base case 1
+		if(root == null) {
+			return -1;
+		} 
+		
+		int left = findKthSmallestElement(root.left, k,cnt);
+		
+		if(left!=-1) {
+			return left;
+		}
+		
+		cnt[0]++;
+		if(root!=null && cnt[0] == k) {
+			return root.data;
+		}
+		
+		return findKthSmallestElement(root.right, k, cnt);
+	}
+	
 	
 	public static void main(String args[]) {
 		
 		// 21 10 50 5 15 40 60 55 70 -1
 		// 100 50 110 25 70 120 60 115 -1
 		// 100 200 110 25 70 120 60 115 -1
+		// 5 4 8 2 6 10 3 7 -1
 		
 		root = takeInput(root);
 		levelOrderTraversal(root);
@@ -350,8 +371,9 @@ public class BinarySearchTree {
 		System.out.println("\n\nPostOrder:\n");
 		postOrderTraversal(root);
 		
-		System.out.println("\n"+searchInBST(root,70));
-		System.out.println("\n" + searchInBstEfficient(root,70));
+		System.out.println("\n"+searchInBST(root,7));
+		System.out.println("\n" + searchInBstEfficient(root,7));
+		
 		System.out.println("\nMin Value: " + findMinValueInBST(root));
 		System.out.println("\nMax Value: " + findMaxValueInBST(root));
 		
@@ -363,6 +385,12 @@ public class BinarySearchTree {
 		levelOrderTraversal(root);
 		
 		System.out.println(isBSTValid(root,Integer.MIN_VALUE, Integer.MAX_VALUE));
+		int [] cnt = {0};
+		int kthSmallestInBST = findKthSmallestElement(root,3,cnt);
+		System.out.println("\nKth Smallest Element in BST is: " + kthSmallestInBST);
+		
+		
+	
 	}
 	
 }
