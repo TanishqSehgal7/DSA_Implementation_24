@@ -352,6 +352,52 @@ public class BinarySearchTree {
 	}
 	
 	
+	public static void findSuccessorPredecesor(Node root, int x) {
+		
+		
+		Node temp = root;
+		int successor = -1;
+		int predecessor = -1;
+		
+		// find the key and keep saving values of successor and predecessor
+		
+		while(temp.data!=x) {
+			
+			if(x > temp.data) {
+				successor = temp.data;
+				temp = temp.right;
+			} else {
+				predecessor = temp.data;
+				temp = temp.left;
+			}			
+		}
+		
+		// after exitting, the above loop temp.data == x and key is found
+		
+		Node leftTree = temp.left;
+		
+		// gives predecessor -> maximum value smaller than x
+		while(leftTree!=null) {
+			predecessor = leftTree.data;
+			leftTree = leftTree.right;
+		}
+		
+		System.out.println("Predecessor is: " + predecessor);
+		
+		
+		Node rightTree = temp.right;
+		
+		// gives successor -> minimum value greater than x
+		while(rightTree!=null) {
+			successor = rightTree.data;
+			rightTree = rightTree.left;
+		}
+		
+		System.out.println("Successor is: " + successor);
+		
+	}
+	
+	
 	public static void main(String args[]) {
 		
 		// 21 10 50 5 15 40 60 55 70 -1
@@ -389,6 +435,9 @@ public class BinarySearchTree {
 		int kthSmallestInBST = findKthSmallestElement(root,3,cnt);
 		System.out.println("\nKth Smallest Element in BST is: " + kthSmallestInBST);
 		
+		System.out.println("\n");
+		
+		findSuccessorPredecesor(root,8);
 		
 	
 	}
