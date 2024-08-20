@@ -2,6 +2,7 @@ package BinarySearchTree;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 
@@ -469,12 +470,40 @@ public class BinarySearchTree {
 				i++;
 			} else if(sum > target) {
 				j--;
-			} else {
-				return false;
 			}
 		}
 		
 		return false;
+	}
+	
+	
+	public static ArrayList<Node> bstToLL_Inorder(Node root, ArrayList<Node> arr) {
+		
+		
+		if(root == null) {
+			return arr;
+		}
+		
+		bstToLL_Inorder(root.left, arr);
+		
+		arr.add(root);
+		
+		bstToLL_Inorder(root.right, arr);
+		
+		return arr;
+	}
+	
+	public static Node bstToLinkedList(Node root, ArrayList<Node> arr) {
+		
+		arr = bstToLL_Inorder(root, arr);
+		
+		for(int i=0;i<arr.size()-1;i++) {
+			
+			arr.get(i).left = null;
+			arr.get(i).right = arr.get(i+1);
+		}
+		
+		return arr.get(0);
 	}
 	
 	
@@ -529,6 +558,17 @@ public class BinarySearchTree {
 		ArrayList<Integer> arr = new ArrayList<Integer>();
 		
 		System.out.println(isTwoSumValid(root, arr, 10));
+		
+		ArrayList<Node> nodeList = new ArrayList<Node>();
+		Node head  = bstToLinkedList(root, nodeList);
+		
+		System.out.println("\n");
+		
+		while(head!=null) {
+			System.out.print(head.data + " ");
+			head = head.right;
+		}
+		
 	}
 	
 }
