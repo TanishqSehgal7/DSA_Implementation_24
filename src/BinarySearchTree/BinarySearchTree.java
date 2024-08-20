@@ -54,7 +54,7 @@ public class BinarySearchTree {
 		return root;
 	}
 	
-	public static boolean searchInBST(Node root, int x) {
+	public static Node searchInBST(Node root, int x) {
 		
 		/*
 			recursive solution has o(height) complexity for most case but has o(n) complexity for skew tree
@@ -63,11 +63,11 @@ public class BinarySearchTree {
 		
 		// base case
 		if(root == null) {
-			return false;
+			return null;
 		}
 		
 		if(root.data == x) {
-			return true;
+			return root;
 		}
 		
 		if(x > root.data) {
@@ -77,7 +77,7 @@ public class BinarySearchTree {
 		}
  	}
 	
-	public static boolean searchInBstEfficient(Node root, int x) {
+	public static Node searchInBstEfficient(Node root, int x) {
 		
 		Node temp = root;
 		
@@ -90,10 +90,10 @@ public class BinarySearchTree {
 			}
 			
 			if(temp.data == x) {
-				return true;
+				return temp;
 			}
 		}
-		return false;
+		return null;
 	}
 	
 	public static int findMinValueInBST(Node root) {
@@ -398,6 +398,42 @@ public class BinarySearchTree {
 	}
 	
 	
+	// iterative solution for constant space
+	public static Node LCA(Node root, Node a, Node b) {
+		
+		while(root!=null) {
+			
+			if(root.data > a.data && root.data > b.data) {
+				root = root.left;
+			} else if(root.data < a.data && root.data < b.data) {
+				root = root.right;
+			} else {
+				return root;
+			}
+		}
+		return null;
+	}
+	
+	
+	public static Node LCA_Recursive(Node root, Node a, Node b) {
+		
+		// base case
+		if(root == null) {
+			return root;
+		}
+		
+		if(root.data > a.data && root.data > b.data) { // traverse to left part
+			return LCA_Recursive(root.left, a, b);
+		}
+		
+		if(root.data < a.data && root.data < b.data) {
+			return LCA_Recursive(root.right, a, b);
+		}
+		
+		return root;
+	}
+	
+	
 	public static void main(String args[]) {
 		
 		// 21 10 50 5 15 40 60 55 70 -1
@@ -439,7 +475,12 @@ public class BinarySearchTree {
 		
 		findSuccessorPredecesor(root,8);
 		
-	
+		Node a = searchInBstEfficient(root, 6);
+		Node b = searchInBstEfficient(root, 10);
+		
+		System.out.println("\nLCA Iterative: " + LCA(root,a,b).data);
+		
+		System.out.println("\nLCA Recursive: " + LCA_Recursive(root,a,b).data);
 	}
 	
 }
