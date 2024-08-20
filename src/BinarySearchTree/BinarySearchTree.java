@@ -1,5 +1,6 @@
 package BinarySearchTree;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Scanner;
@@ -434,6 +435,49 @@ public class BinarySearchTree {
 	}
 	
 	
+	public static ArrayList<Integer> twoSumInBST(Node root, ArrayList<Integer> arr) {
+		
+		
+		if(root == null ) {
+			return arr;
+		}
+		
+		twoSumInBST(root.left, arr);
+		
+		arr.add(root.data);
+
+		twoSumInBST(root.right, arr);
+		
+		return arr;
+	}
+	
+	public static boolean isTwoSumValid(Node root, ArrayList<Integer> arr, int target) {
+		
+		arr = twoSumInBST(root, arr);
+		
+		int i = 0; int j = arr.size()-1;
+		
+		int sum = 0;
+		
+		while(i<j) {
+			
+			sum = arr.get(i) + arr.get(j);
+			if(sum == target) {
+				System.out.println("\n\nSum = Target for -> "+ arr.get(i) + " and " + arr.get(j));
+				return true;
+			} else if(sum < target) {
+				i++;
+			} else if(sum > target) {
+				j--;
+			} else {
+				return false;
+			}
+		}
+		
+		return false;
+	}
+	
+	
 	public static void main(String args[]) {
 		
 		// 21 10 50 5 15 40 60 55 70 -1
@@ -481,6 +525,10 @@ public class BinarySearchTree {
 		System.out.println("\nLCA Iterative: " + LCA(root,a,b).data);
 		
 		System.out.println("\nLCA Recursive: " + LCA_Recursive(root,a,b).data);
+		
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+		
+		System.out.println(isTwoSumValid(root, arr, 10));
 	}
 	
 }
