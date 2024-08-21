@@ -509,51 +509,6 @@ public class BinarySearchTree {
 		return arr.get(0);
 	}
 	
-	public static ArrayList<Integer> savedBstValuesToArrInOrder(Node root, ArrayList<Integer> arr) {
-		
-		
-		if(root == null) {
-			return arr;
-		}
-		
-		savedBstValuesToArrInOrder(root.left, arr);
-		
-		arr.add(root.data);
-		
-		savedBstValuesToArrInOrder(root.right, arr);
-		
-		return arr;
-	}
-
-	public static Node normalToBalancedBST(Node root) {
-	    
-		ArrayList<Integer> arr = new ArrayList<Integer>();
-	    arr = savedBstValuesToArrInOrder(root, arr);
-
-	    return inOrderToBalancedBST(0, arr.size() - 1, arr); // Adjusted end parameter
-	}
-
-	public static Node inOrderToBalancedBST(int start, int end, ArrayList<Integer> arr) {
-	    
-		// Base case should be start > end to stop recursion
-	    if (start > end) {
-	        return null;
-	    }
-
-	    // Find mid
-	    int mid = (start + end) / 2;
-	    Node root = new Node(arr.get(mid));
-
-	    // Left call 
-	    root.left = inOrderToBalancedBST(start, mid - 1, arr);
-
-	    // Right call
-	    root.right = inOrderToBalancedBST(mid + 1, end, arr); // Corrected end parameter
-
-	    return root;
-	}
-	
-	
 	public static void main(String args[]) {
 		
 		// 21 10 50 5 15 40 60 55 70 -1
@@ -596,12 +551,12 @@ public class BinarySearchTree {
 		
 		findSuccessorPredecesor(root,40);
 		
-//		Node a = searchInBstEfficient(root, 60);
-//		Node b = searchInBstEfficient(root, 20);
-//		
-//		System.out.println("\nLCA Iterative: " + LCA(root,a,b).data);
-//		
-//		System.out.println("\nLCA Recursive: " + LCA_Recursive(root,a,b).data);
+		Node a = searchInBstEfficient(root, 60);
+		Node b = searchInBstEfficient(root, 20);
+		
+		System.out.println("\nLCA Iterative: " + LCA(root,a,b).data);
+		
+		System.out.println("\nLCA Recursive: " + LCA_Recursive(root,a,b).data);
 		
 		ArrayList<Integer> arr = new ArrayList<Integer>();
 		
@@ -616,12 +571,6 @@ public class BinarySearchTree {
 			System.out.print(head.data + " ");
 			head = head.right;
 		}
-		
-		System.out.println("\n");
-		
-		Node newNode = normalToBalancedBST(root);
-		
-		levelOrderTraversal(newNode);
 	}
 	
 }
