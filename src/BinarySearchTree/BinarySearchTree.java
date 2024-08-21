@@ -346,7 +346,7 @@ public class BinarySearchTree {
 		}
 		
 		cnt[0]++;
-		if(root!=null && cnt[0] == k) {
+		if(root!=null && cnt[0] == k-1) {
 			return root.data;
 		}
 		
@@ -477,25 +477,25 @@ public class BinarySearchTree {
 	}
 	
 	
-	public static ArrayList<Node> bstToLL_Inorder(Node root, ArrayList<Node> arr) {
+	public static ArrayList<Node> savedBstToArrInOrder(Node root, ArrayList<Node> arr) {
 		
 		
 		if(root == null) {
 			return arr;
 		}
 		
-		bstToLL_Inorder(root.left, arr);
+		savedBstToArrInOrder(root.left, arr);
 		
 		arr.add(root);
 		
-		bstToLL_Inorder(root.right, arr);
+		savedBstToArrInOrder(root.right, arr);
 		
 		return arr;
 	}
 	
 	public static Node bstToLinkedList(Node root, ArrayList<Node> arr) {
 		
-		arr = bstToLL_Inorder(root, arr);
+		arr = savedBstToArrInOrder(root, arr);
 		
 		for(int i=0;i<arr.size()-1;i++) {
 			
@@ -503,7 +503,54 @@ public class BinarySearchTree {
 			arr.get(i).right = arr.get(i+1);
 		}
 		
+		arr.get(arr.size()-1).left = null;
+		arr.get(arr.size()-1).right = null;
+		
 		return arr.get(0);
+	}
+	
+	public static ArrayList<Integer> savedBstValuesToArrInOrder(Node root, ArrayList<Integer> arr) {
+		
+		
+		if(root == null) {
+			return arr;
+		}
+		
+		savedBstValuesToArrInOrder(root.left, arr);
+		
+		arr.add(root.data);
+		
+		savedBstValuesToArrInOrder(root.right, arr);
+		
+		return arr;
+	}
+
+	public static Node normalToBalancedBST(Node root) {
+	    
+		ArrayList<Integer> arr = new ArrayList<Integer>();
+	    arr = savedBstValuesToArrInOrder(root, arr);
+
+	    return inOrderToBalancedBST(0, arr.size() - 1, arr); // Adjusted end parameter
+	}
+
+	public static Node inOrderToBalancedBST(int start, int end, ArrayList<Integer> arr) {
+	    
+		// Base case should be start > end to stop recursion
+	    if (start > end) {
+	        return null;
+	    }
+
+	    // Find mid
+	    int mid = (start + end) / 2;
+	    Node root = new Node(arr.get(mid));
+
+	    // Left call 
+	    root.left = inOrderToBalancedBST(start, mid - 1, arr);
+
+	    // Right call
+	    root.right = inOrderToBalancedBST(mid + 1, end, arr); // Corrected end parameter
+
+	    return root;
 	}
 	
 	
@@ -513,6 +560,7 @@ public class BinarySearchTree {
 		// 100 50 110 25 70 120 60 115 -1
 		// 100 200 110 25 70 120 60 115 -1
 		// 5 4 8 2 6 10 3 7 -1
+		// 50 30 60 20 40 70 80 -1
 		
 		root = takeInput(root);
 		levelOrderTraversal(root);
@@ -526,15 +574,15 @@ public class BinarySearchTree {
 		System.out.println("\n\nPostOrder:\n");
 		postOrderTraversal(root);
 		
-		System.out.println("\n"+searchInBST(root,7));
-		System.out.println("\n" + searchInBstEfficient(root,7));
+		System.out.println("\n"+searchInBST(root,80));
+		System.out.println("\n" + searchInBstEfficient(root,80));
 		
 		System.out.println("\nMin Value: " + findMinValueInBST(root));
 		System.out.println("\nMax Value: " + findMaxValueInBST(root));
 		
 		int x = 50;
-		System.out.println("\nIn Order successor of " + x + " is: " + findInOrderSuccessor(root,x));
-		System.out.println("\nIn Order predecessor of " + x + " is: " + findInOrderPredecessor(root,x));
+		System.out.println("\nIn Order successor of " + x + " is: " + findInOrderSuccessor(root,x).data);
+		System.out.println("\nIn Order predecessor of " + x + " is: " + findInOrderPredecessor(root,x).data);
 		
 		root = deleteFromBST(root,x);
 		levelOrderTraversal(root);
@@ -546,18 +594,18 @@ public class BinarySearchTree {
 		
 		System.out.println("\n");
 		
-		findSuccessorPredecesor(root,8);
+		findSuccessorPredecesor(root,40);
 		
-		Node a = searchInBstEfficient(root, 6);
-		Node b = searchInBstEfficient(root, 10);
-		
-		System.out.println("\nLCA Iterative: " + LCA(root,a,b).data);
-		
-		System.out.println("\nLCA Recursive: " + LCA_Recursive(root,a,b).data);
+//		Node a = searchInBstEfficient(root, 60);
+//		Node b = searchInBstEfficient(root, 20);
+//		
+//		System.out.println("\nLCA Iterative: " + LCA(root,a,b).data);
+//		
+//		System.out.println("\nLCA Recursive: " + LCA_Recursive(root,a,b).data);
 		
 		ArrayList<Integer> arr = new ArrayList<Integer>();
 		
-		System.out.println(isTwoSumValid(root, arr, 10));
+		System.out.println(isTwoSumValid(root, arr, 20));
 		
 		ArrayList<Node> nodeList = new ArrayList<Node>();
 		Node head  = bstToLinkedList(root, nodeList);
@@ -569,6 +617,11 @@ public class BinarySearchTree {
 			head = head.right;
 		}
 		
+		System.out.println("\n");
+		
+		Node newNode = normalToBalancedBST(root);
+		
+		levelOrderTraversal(newNode);
 	}
 	
 }
