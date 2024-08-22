@@ -106,7 +106,6 @@ public class NormalBstToBalanced {
 		return inOrderToBalancedBST(0, arr.size()-1, arr);
 	}
 	
-	
 	public static Node inOrderToBalancedBST(int start, int end, ArrayList<Integer> arr) {
 		
 		// base case
@@ -125,8 +124,6 @@ public class NormalBstToBalanced {
 		
 		return root;
 	}
-	
-	
 	
 	public static void main(String[] args) {
 		
