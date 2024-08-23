@@ -3,8 +3,6 @@ package BinarySearchTree;
 import java.util.LinkedList;
 import java.util.Queue;
 
-import BinarySearchTree.BinarySearchTree.Node;
-
 public class PreOrderToBST {
 	
 	
@@ -95,8 +93,6 @@ public class PreOrderToBST {
 		return solve(preOrder, min, max, i);
 	}
 	
-	
-
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 
