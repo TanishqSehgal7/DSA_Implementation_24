@@ -179,5 +179,9 @@ public class MergeTwoBst {
 	}
 	
 
+//	50 
+//	40 60 
+//	35 45 55 65 
+//	47 70 
 
 }
