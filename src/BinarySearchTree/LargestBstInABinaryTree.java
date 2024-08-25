@@ -2,8 +2,6 @@ package BinarySearchTree;
 
 import java.util.Scanner;
 
-import BinaryTrees.BinaryTree.Node;
-
 public class LargestBstInABinaryTree {
 	
 	static Node root;	
