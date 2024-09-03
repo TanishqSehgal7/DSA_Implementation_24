@@ -10,7 +10,7 @@ public class SelectionSort {
 			
 			int minIdx = i;
 			
-			for(int j = i; j<arr.length; j++) {
+			for(int j = i+1 ; j<arr.length; j++) {
 				if(arr[j] < arr[minIdx]) {
 					minIdx = j;
 				}
