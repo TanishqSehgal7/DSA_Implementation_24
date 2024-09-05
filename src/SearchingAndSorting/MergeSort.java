@@ -79,7 +79,7 @@ public class MergeSort {
 	
 	public static void main(String[] args) {
 		
-		int arr[] = {38,27,43,3,9,82,10};
+		int arr[] = {38,27,43,3,9,82,10,3,5,3,7,98,12,15};
 		
 		mergeSort(arr, 0, arr.length-1);
 		
