@@ -9,7 +9,7 @@ public class BinarySearch {
 		while(s!=e) {
 			
 			// calculate mid
-			int mid = (s+e)/2;
+			int mid = s + (e-s)/2;
 			
 			if(arr[mid] > x) { // x exists in the left part of the array
 				e = mid-1;
@@ -32,7 +32,7 @@ public class BinarySearch {
 		while(s!=e) {
 			
 			// calculate mid
-			int mid = (s+e)/2;
+			int mid = s + (e-s)/2;
 			
 			if(arr[mid] > x) { // x exists in the right part of the array
 				s = mid + 1;
@@ -53,11 +53,10 @@ public class BinarySearch {
 	public static int binarySearch(int arr[], int x, int s, int e) {
 		
 		boolean isIncreasing = arr[s] < arr[e];
-		System.out.println(isIncreasing);
 		
 		while(s!=e) {
 			
-			int mid = (s+e)/2;
+			int mid = s + (e-s)/2;
 			
 			if(isIncreasing) {
 				
@@ -85,6 +84,57 @@ public class BinarySearch {
 		return -1;
 	}
 	
+	public static int firstOccurance(int arr[], int x, int s, int e) {
+		
+		int ans = -1;
+		
+		while(s<=e) {
+			
+			int mid = s + (e-s)/2;
+			
+			if(arr[mid] == x) {
+				ans = mid;
+				e = mid-1;
+			}
+			
+			if(arr[mid] > x) { // move towards left part
+				e = mid-1;
+			}
+			
+			if(arr[mid] < x) { // move towards right part
+				s = mid + 1;
+			}
+		}
+		
+		return ans;
+	}
+	
+	
+	public static int lastOccurance(int arr[], int x, int s, int e) {
+		
+		int ans = -1;
+		
+		while(s<=e) {
+			
+			int mid = s + (e-s)/2;
+			
+			if(arr[mid] == x) {
+				ans = mid;
+				s = mid + 1;
+			}
+			
+			if(arr[mid] > x) {
+				e = mid - 1;
+			}
+			
+			if(arr[mid] < x) {
+				s = mid + 1; 
+			}
+		}
+		
+		return ans;
+	}
+	
 
 	public static void main(String[] args) {
 		
@@ -100,6 +150,12 @@ public class BinarySearch {
 		System.out.println("Element " + k1 + " is found at position: " + binarySearch(arr1,k1,0,arr1.length-1));
 		System.out.println("Element " + k2 + " is found at position: " + binarySearch(arr2,k2,0,arr2.length-1));
 		
+		
+		int arr3[] = {1,2,4,4,4,4,4,4,6,7,7,8};
+		int x = 4;
+		System.out.println("Element " +  x + " has its first occurance at: " + firstOccurance(arr3, x, 0, arr3.length-1));
+		System.out.println("Element " +  x + " has its first occurance at: " + lastOccurance(arr3, x, 0, arr3.length-1));
+
 	}
 
 }
