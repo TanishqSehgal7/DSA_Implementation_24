@@ -23,7 +23,7 @@ public class BinarySearch {
 		}
 		
 		return -1;
-	}
+	} 
 	
 	
 	public static int binarySearchReverseSorted(int arr[], int x, int s, int e) {
@@ -135,6 +135,47 @@ public class BinarySearch {
 		return ans;
 	}
 	
+	
+//	public static int findPeakInMountainArray(int arr[]) {
+//		
+//		int s = 0;
+//		int e = arr.length-1;
+//		
+//		while(s<e) {
+//			
+//			int mid = s + (e-s)/2;
+//			
+//			if(arr[mid] > arr[mid+1]) {
+//				e = mid;
+//			} else if(arr[mid] < arr[mid + 1]) {
+//				s = mid + 1;
+//			}
+//		}
+//		
+//		return s;
+//	}
+	
+	public static int findPeakInMountainArray(int arr[]) {
+	    
+	    int s = 0;
+	    int e = arr.length - 1;
+	    
+	    while (s < e) {
+	        
+	        int mid = s + (e - s) / 2;
+	        
+	        // Check if mid is in the decreasing part of the array
+	        if (arr[mid] > arr[mid + 1]) {
+	            e = mid; // Peak could be at mid or to the left
+	        } else {
+	            s = mid + 1; // Peak is to the right
+	        }
+	    }
+	    
+	    return s; // Peak index
+	}
+
+	
 
 	public static void main(String[] args) {
 		
@@ -155,7 +196,9 @@ public class BinarySearch {
 		int x = 4;
 		System.out.println("Element " +  x + " has its first occurance at: " + firstOccurance(arr3, x, 0, arr3.length-1));
 		System.out.println("Element " +  x + " has its first occurance at: " + lastOccurance(arr3, x, 0, arr3.length-1));
-
+		
+		int mountainArray[] = {3,5,6,4,3,2,1};
+		int peak = mountainArray[findPeakInMountainArray(mountainArray)];
+		System.out.println("Peak element is: " + peak);
 	}
-
 }
