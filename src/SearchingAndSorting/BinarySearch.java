@@ -128,6 +128,41 @@ public class BinarySearch {
 	}
 	
 	
+	public static int findPivotInSortedRotatedArray(int arr[]) {
+		
+		int s = 0; int e = arr.length-1;
+		
+		int mid = 0;
+		
+		while(s < e) {
+			
+			mid = s + (e-s)/2;
+			
+			if(arr[mid] > arr[0]) {
+				s = mid + 1;
+			} else {
+				e = mid;
+			}
+		}
+		return s;
+	}
+	
+	public static int searchInRotatedSortedArray(int arr[], int x) {
+		
+		int pivotIndex = findPivotInSortedRotatedArray(arr);
+		
+		int ans = -1;
+		
+		if(x >= arr[pivotIndex] && x <= arr[arr.length-1]) {
+			ans = binarySearch(arr, x,  pivotIndex-1,  arr.length-1);
+		} else {
+			ans = binarySearch(arr, x, 0, pivotIndex-1);
+		}
+		
+		return ans;
+	}
+ 	
+	
 	public static void main(String[] args) {
 		
 		int arr1[] = {1,3,5,7,9,11,13,15,17,19,21};
@@ -145,5 +180,13 @@ public class BinarySearch {
 		
 		int mountainArray[] = {4,5,6,7,3,2,1};
 		System.out.println("Peak element in the mountain array is: " + mountainArray[findPeakElementInMountainArray(mountainArray)]);
+		
+		int rotatedSorted[] = {7,9,1,2,3};
+		int k4 = 9;
+		int k5 = 2;
+		int pivot = rotatedSorted[findPivotInSortedRotatedArray(rotatedSorted)];
+		System.out.println("Pivot Element in the Rotated Sorted Array is: " + pivot);
+		System.out.println("Element " + k4 + " is found at index: " + searchInRotatedSortedArray(rotatedSorted,k4));
+		System.out.println("Element " + k5 + " is found at index: " + searchInRotatedSortedArray(rotatedSorted,k5));
 	}
 }
