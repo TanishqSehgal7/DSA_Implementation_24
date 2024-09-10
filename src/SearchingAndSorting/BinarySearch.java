@@ -170,6 +170,50 @@ public class BinarySearch {
 		
 		return ans;
 	}
+	
+	public static long findSquareRootInteger(int x) {
+		
+		long s = 0; long e = x;
+		
+		long mid = s + (e-s)/2;
+		long ans = -1;
+		while(s<=e) {
+			
+			if(Math.pow(mid,2) == x) {
+				return mid;
+			}
+			
+			if(Math.pow(mid,2) > x) {
+				e = mid - 1;
+			} else if(Math.pow(mid,2) < x) {
+				ans = mid;
+				s = mid + 1;
+			}
+			
+			mid = s + (e-s)/2;
+		}
+		
+		return ans;
+	}
+	
+	public static double findSquareRootWithPrecision(int x, long integerPart, int precisionCount) {
+		
+		
+		double factor = 1;
+		
+		double ans = integerPart;
+		
+		for(int i = 0; i<precisionCount; i++) {
+			
+			factor = factor/10;
+			
+			for(double j =integerPart; j*j<x; j+=factor) {
+				ans = j;
+			}
+		}
+		
+		return ans;
+	}
  	
 	
 	public static void main(String[] args) {
@@ -178,24 +222,41 @@ public class BinarySearch {
 		int k1 = 19;
 		System.out.println("Element " + k1 + " found at position: " + binarySearch(arr1, k1, 0, arr1.length-1));
 		
+		System.out.println("\n");
+		
 		int arr2[] = {21,19,17,15,13,11,9,7,5,3,1};
 		int k2 = 11;
 		System.out.println("Element " + k2 + " found at position: " + binarySearchReverseSorted(arr2, k2, 0, arr2.length-1));
+		
+		System.out.println("\n");
 		
 		int arr3[] = {1,2,3,3,5};
 		int k3 = 3;
 		System.out.println("First Occurance of " + k3 + " is at index: " + firstOccurance(arr3,k3,0,arr3.length-1));
 		System.out.println("First Occurance of " + k3 + " is at index: " + lastOccurance(arr3,k3,0,arr3.length-1));
 		
+		System.out.println("\n");
+		
 		int mountainArray[] = {4,5,6,7,3,2,1};
 		System.out.println("Peak element in the mountain array is: " + mountainArray[findPeakElementInMountainArray(mountainArray)]);
 		
-		int rotatedSorted[] = {3,1};
-		int k4 = 3;
-		int k5 = 1;
+		System.out.println("\n");
+		
+		int rotatedSorted[] = {7,9,1,2,3};
+		int k4 = 9;
+		int k5 = 2;
 		int pivot = rotatedSorted[findPivotInSortedRotatedArray(rotatedSorted)];
 		System.out.println("Pivot Element in the Rotated Sorted Array is: " + pivot);
 		System.out.println("Element " + k4 + " is found at index: " + searchInRotatedSortedArray(rotatedSorted,k4));
 		System.out.println("Element " + k5 + " is found at index: " + searchInRotatedSortedArray(rotatedSorted,k5));
+		
+		System.out.println("\n");
+		
+		int x = 10;
+		long integerPartOfSqRoot = findSquareRootInteger(x);
+		int precisionCount = 3;
+		double precisionPartOfSqRoot = findSquareRootWithPrecision(x, integerPartOfSqRoot, precisionCount);
+		System.out.println("Integer Square Root of " + x + " is: " + integerPartOfSqRoot);
+		System.out.println("Precise Square Root of " + x + " is: " + precisionPartOfSqRoot);
 	}
 }
