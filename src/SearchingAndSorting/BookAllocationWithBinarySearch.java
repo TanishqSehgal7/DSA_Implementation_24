@@ -1,5 +1,7 @@
 package SearchingAndSorting;
 
+import java.util.Arrays;
+
 public class BookAllocationWithBinarySearch {
 	
 	public static int allocateBooks(int arr[], int m) {
@@ -84,14 +86,17 @@ public class BookAllocationWithBinarySearch {
 		int ans = -1;
 		
 		while(s<=e) {
+			
 			if(isBlockAllocationPossible(blocks, k, mid)) {
 				ans = mid;
 				e = mid - 1;
 			} else {
 				s = mid + 1;
 			}	
+			
 			mid = s + (e-s)/2;
 		}
+		
 		return ans;
 	}
 	
@@ -116,6 +121,57 @@ public class BookAllocationWithBinarySearch {
 		return true;
 	}
 	
+	public static int aggresiveCows(int stalls[], int k) {
+		
+		 Arrays.sort(stalls);
+		 
+		 int s = 0;
+		 int max = -1;
+		 
+		 for(int element : stalls) {
+			 max = Math.max(max, element);
+		 }
+		 
+		 int e = max;
+		 int ans = -1;
+		 
+		 int mid = s + (e-s)/2;
+		 
+		 while(s<=e) {
+			 
+			 if(isPossibleSol(stalls,k,mid)) {
+				 ans = mid;
+				 s = mid + 1;
+			 } else {
+				 e = mid - 1;
+			 }
+			 
+			 mid = s + (e-s)/2;
+		 }
+		
+		 return ans;
+	}
+	
+	
+	public static boolean isPossibleSol(int stalls[], int k, int mid) {
+		
+		int cowCount = 1; int start = stalls[0];
+		
+		for(int i=0; i<stalls.length; i++) {
+			
+			if(stalls[i] - start >= mid) {
+				cowCount++;
+				if(cowCount == k) {
+					return true;
+				}
+				start = stalls[i];
+			}
+		}
+		
+		return false;
+	}
+	
+	
 	public static void main(String[] args) {
 		
 		int books[] = {10,20,30,40};
@@ -124,8 +180,13 @@ public class BookAllocationWithBinarySearch {
 		int blocks[] = {5,5,5,5};
 		int k = 2;
 		
+		int stalls[] = {4,2,1,3,6};
+		int c = 2;
+		
 		System.out.println(allocateBooks(books,m));
 		
 		System.out.println(paintBlocks(blocks,k));
+		
+		System.out.println(aggresiveCows(stalls,c));
 	}
 }
