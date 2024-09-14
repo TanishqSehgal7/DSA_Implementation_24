@@ -148,10 +148,8 @@ public class BookAllocationWithBinarySearch {
 			 
 			 mid = s + (e-s)/2;
 		 }
-		
 		 return ans;
 	}
-	
 	
 	public static boolean isPossibleSol(int stalls[], int k, int mid) {
 		
@@ -170,7 +168,6 @@ public class BookAllocationWithBinarySearch {
 		
 		return false;
 	}
-	
 	
 	public static void main(String[] args) {
 		
