@@ -28,6 +28,40 @@ public class RecursionBasicQuestions {
 		
 	}
 	
+	
+	public static void printCountingUptoN(int n) {
+		
+		if(n == 0)
+			return;
+		
+		printCountingUptoN(n-1);
+		
+		System.out.print(n + " ");
+	}
+	
+	
+	public static int fibonacciSeries(int n) {
+		
+		if(n == 0 || n == 1) {
+			return n;
+		}
+		
+		return fibonacciSeries(n-1) + fibonacciSeries(n-2);
+		
+	}
+	
+	public static int distinctWaysOfClimbingStairs(int n) {
+		
+		if(n < 0)
+			return 0;
+		
+		if(n == 0)
+			return 1;
+		
+		return distinctWaysOfClimbingStairs(n-1) + distinctWaysOfClimbingStairs(n-2);
+		
+	}
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -36,6 +70,14 @@ public class RecursionBasicQuestions {
 		System.out.println(findPower(2, 4));
 		
 		System.out.println(findFactorial(5));
+		
+		printCountingUptoN(10);
+		
+		System.out.print("\n");
+		
+		System.out.println(fibonacciSeries(7));
+		
+		System.out.println(distinctWaysOfClimbingStairs(3));
 	}
 
 }
