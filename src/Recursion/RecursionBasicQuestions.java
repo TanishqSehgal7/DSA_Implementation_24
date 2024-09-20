@@ -1,6 +1,11 @@
 package Recursion;
 
+import java.util.HashMap;
+import java.util.Scanner;
+
 public class RecursionBasicQuestions {
+	
+	static Scanner scn = new Scanner(System.in);
 	
 	public static int findPower(int x, int n) {
 		
@@ -62,6 +67,36 @@ public class RecursionBasicQuestions {
 		
 	}
 	
+	public static void sayDigit(int n, HashMap<Integer,String> map) {
+		
+		if(n == 0)
+			return;
+		
+		int digit = n%10;
+		
+		sayDigit(n/10, map);
+		System.out.print(map.get(digit) + " ");
+	}
+	
+	
+	public static int binarySearchUsingRecursion(int arr[], int x, int s, int e) {
+		
+		int mid = s + (e-s)/2;
+		
+		if(s > e)
+			return -1;
+		
+		if(x == arr[mid])
+			return mid;
+		
+		
+		if(x > arr[mid]) {
+			return binarySearchUsingRecursion(arr, x, mid+1, e);
+		} else {
+			return binarySearchUsingRecursion(arr, x, s, mid-1);
+		}		
+	}
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -77,7 +112,26 @@ public class RecursionBasicQuestions {
 		
 		System.out.println(fibonacciSeries(7));
 		
-		System.out.println(distinctWaysOfClimbingStairs(3));
+		System.out.println(distinctWaysOfClimbingStairs(5));
+		
+		HashMap<Integer, String> map = new HashMap<>();
+		map.put(0, "Zero");
+		map.put(1, "One");
+		map.put(2, "Two");
+		map.put(3, "Three");
+		map.put(4, "Four");
+		map.put(5, "Five");
+		map.put(6,  "Six");
+		map.put(7, "Seven");
+		map.put(8, "Eight");
+		map.put(9, "Nine");
+		
+		sayDigit(2243653,map);
+		System.out.println();
+		
+		int arr[] = {1,2,3,4,5,6,7,8,9,10};
+		
+		System.out.println(binarySearchUsingRecursion(arr,8, 0, arr.length-1));
 	}
 
 }
