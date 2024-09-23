@@ -17,8 +17,12 @@ public class RecursionBasicQuestions {
 			return x;
 		}
 		
-		return x * findPower(x, n-1);
+		int ans = findPower(x, n/2);
 		
+		if(n%2 == 0) // x^(n/2) * x^(n/2)
+			return ans * ans;
+		else // x * x^(n/2) * x^(n/2)
+			return x * ans * ans;	
 	}
 	
 	
@@ -147,6 +151,35 @@ public class RecursionBasicQuestions {
 		return isFound;
 	}
 	
+	
+	public static String reverseString(String str, int s, int e, String revStr) {
+		
+		if(str.isEmpty() || str.length() == 1) {
+			return str;
+		}
+		
+		return (str.substring(1) + str.charAt(0));
+	}
+	
+	
+	public static boolean isPalindrome(String str, int s, int e) {
+		
+		
+		boolean isPalin = true;
+		
+		if(s >= e)
+			return isPalin;
+		
+		
+		if(str.charAt(s) != str.charAt(e))
+			return false;
+		
+		isPalin = isPalindrome(str,s+1,e-1);
+		
+		return isPalin;
+		
+	}
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -191,6 +224,13 @@ public class RecursionBasicQuestions {
 		
 		int key = 0;
 		System.out.println("Is " + key + " found in the array? " + linearSearch(unSortedArr, key, 0));
+		
+		String str = "Tanishq";
+		System.out.println("Reversed String is: " + reverseString(str, 0, str.length()-1, ""));
+		
+		String palinStr = "abbbba";
+		System.out.println("Is String " + palinStr + " a Palindrome? "+isPalindrome(palinStr,0,palinStr.length()-1));
+		
 	}
 
 }
