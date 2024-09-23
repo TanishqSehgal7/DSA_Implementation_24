@@ -97,6 +97,56 @@ public class RecursionBasicQuestions {
 		}		
 	}
 	
+	
+	public static boolean checkSortedArray(int arr[], int idx) {
+		
+		// base case
+		if(arr.length == 0 || arr.length == 1)
+			return true;
+		
+		boolean isSorted = false;
+		
+		if(idx < arr.length-1 && (arr[idx] < arr[idx+1]))
+			isSorted = true;
+		else {
+			isSorted = false;
+			return false;
+		}
+		
+		checkSortedArray(arr, idx+1);
+		
+		return isSorted;
+	}
+	
+	public static int sumOfArray(int arr[], int idx, int sum) {
+		
+		// base case
+		if(idx == arr.length || arr.length == 0)
+			return sum;
+		
+		sum += arr[idx];
+		
+		sum = sumOfArray(arr, idx+1, sum);
+		
+		return sum;
+		
+	}
+	
+	public static boolean linearSearch(int arr[], int key, int idx) {
+		
+		boolean isFound = false;
+		
+		// base case
+		if(arr[idx] == key) {
+			isFound = true;
+			return isFound;
+		}
+		
+		isFound = linearSearch(arr, key, idx+1);
+		
+		return isFound;
+	}
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -132,6 +182,15 @@ public class RecursionBasicQuestions {
 		int arr[] = {1,2,3,4,5,6,7,8,9,10};
 		
 		System.out.println(binarySearchUsingRecursion(arr,8, 0, arr.length-1));
+		
+		int unSortedArr[] = {4,2,7,4,7,7,8,0};
+		
+		System.out.println("Is Array Sorted? " + checkSortedArray(arr, 0));
+		
+		System.out.println("Sum of Array Elements is: " + sumOfArray(unSortedArr, 0, 0));
+		
+		int key = 0;
+		System.out.println("Is " + key + " found in the array? " + linearSearch(unSortedArr, key, 0));
 	}
 
 }
