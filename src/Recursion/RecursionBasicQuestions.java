@@ -180,6 +180,27 @@ public class RecursionBasicQuestions {
 		
 	}
 	
+	
+	public static void bubbleSortRecursion(int arr[], int n) {
+		
+		
+		if(n == 0 || n == 1) {
+			return;
+		}
+		
+		for(int i=0; i<n-1; i++) {
+			if(arr[i] > arr[i+1]) {
+				int temp = arr[i];
+				arr[i] = arr[i+1];
+				arr[i+1] = temp;
+			}
+		}
+		
+		bubbleSortRecursion(arr, n-1);
+		
+	}
+	
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -231,6 +252,10 @@ public class RecursionBasicQuestions {
 		String palinStr = "abbbba";
 		System.out.println("Is String " + palinStr + " a Palindrome? "+isPalindrome(palinStr,0,palinStr.length()-1));
 		
+		bubbleSortRecursion(unSortedArr, unSortedArr.length);
+		for(int element: unSortedArr) {
+			System.out.print(element + " ");
+		}
 	}
 
 }
