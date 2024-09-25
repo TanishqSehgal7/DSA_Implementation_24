@@ -24,6 +24,7 @@ public class PhoneKeypadProblem {
 		// base case
 		if(index >= digits.length()) {
 			ans.add(output);
+			return;
 		}
 		
 		
@@ -45,7 +46,7 @@ public class PhoneKeypadProblem {
 	
 	public static void main(String[] args) {
 		
-		String digits = "34";
+		String digits = "23";
 		List<String> combinations = phoneKeypasCombinations(digits);
 		
 		System.out.println(combinations);
