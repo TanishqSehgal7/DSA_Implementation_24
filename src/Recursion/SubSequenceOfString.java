@@ -21,7 +21,8 @@ public class SubSequenceOfString {
 		
 		// base case 
 		if(index >= str.length()) {
-			list.add(ans);
+			if(ans.length()>0) 
+				list.add(ans);
 			return;
 		}
 		
