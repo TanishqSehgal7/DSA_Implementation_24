@@ -27,7 +27,6 @@ public class PhoneKeypadProblem {
 			return;
 		}
 		
-		
 		int digit = digits.charAt(index) - '0';
 		
 		String value = map[digit];
@@ -41,16 +40,10 @@ public class PhoneKeypadProblem {
 		}
 	}
 	
-	
-	
-	
 	public static void main(String[] args) {
 		
 		String digits = "23";
 		List<String> combinations = phoneKeypasCombinations(digits);
-		
 		System.out.println(combinations);
-		
 	}
-
 }
