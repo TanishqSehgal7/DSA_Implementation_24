@@ -73,7 +73,9 @@ public class InversionCount {
 
 	public static void main(String[] args) {
 		
+		long arr[] = {2,4,1,3,5};
 		
+		System.out.println(inversionCount(arr, arr.length));
 		
 
 	}
