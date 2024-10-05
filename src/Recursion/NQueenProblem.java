@@ -102,10 +102,7 @@ public class NQueenProblem {
 	
 	public static void main(String[] args) {
 		
-		
 		System.out.println(nQueens(4));
-		
-
 	}
 
 }
