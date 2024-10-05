@@ -1,8 +1,6 @@
 package Arrays;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class RotateArrayByKPositions {
 	
@@ -60,7 +58,24 @@ public class RotateArrayByKPositions {
 		return result;
 	}
 	
+	
+	public static void moveAllNegativeElementToStart(int arr[]) {
+		
+		int pos = 0;
+		
+		for(int i=1; i<arr.length && pos<arr.length; i++) {
+			if(arr[pos] < 0) {
+				pos++;
+			} else if(arr[i] < 0) {
+				int temp = arr[i];
+				arr[i] = arr[pos];
+				arr[pos] = temp;
+				pos++;
+			}
+		}
+	}
 
+	
 	public static void main(String[] args) {
 		
 		int [] arr = {1,2,3,4,5,6,7};
@@ -84,7 +99,12 @@ public class RotateArrayByKPositions {
 			System.out.print(element + " ");
 		}
 		
+		int arr4[] = {-1,3,4,5,-3,-4,6,7};
+		moveAllNegativeElementToStart(arr4);
+		System.out.println("\n");
 		
+		for(int element: arr4) {
+			System.out.print(element + " ");
+		}
 	}
-
 }
