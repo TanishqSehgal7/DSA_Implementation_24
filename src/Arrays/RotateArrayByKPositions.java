@@ -1,6 +1,13 @@
 package Arrays;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RotateArrayByKPositions {
 	
@@ -74,6 +81,41 @@ public class RotateArrayByKPositions {
 			}
 		}
 	}
+	
+	
+	public static List<Integer> moveDuplicatesToEnd(List<Integer> arr) {
+        // LinkedHashMap to maintain insertion order
+        Map<Integer, Integer> frequencyMap = new LinkedHashMap<>();
+        
+        // Count frequency of each element
+        for (int num : arr) {
+            frequencyMap.put(num, frequencyMap.getOrDefault(num, 0) + 1);
+        }
+
+        List<Integer> result = new ArrayList<>();
+        List<Integer> duplicates = new ArrayList<>();
+        
+        // Separate non-duplicates and duplicates
+        for (Map.Entry<Integer, Integer> entry : frequencyMap.entrySet()) {
+            int num = entry.getKey();
+            int count = entry.getValue();
+            
+            // If it's a duplicate (appears more than once), move to 'duplicates' list
+            if (count > 1) {
+                for (int i = 0; i < count; i++) {
+                    duplicates.add(num);
+                }
+            } else {
+                // Add non-duplicates directly to the result list
+                result.add(num);
+            }
+        }
+        
+        // Add all duplicates at the end of the result
+        result.addAll(duplicates);
+        
+        return result;
+    }
 
 	
 	public static void main(String[] args) {
@@ -106,5 +148,30 @@ public class RotateArrayByKPositions {
 		for(int element: arr4) {
 			System.out.print(element + " ");
 		}
+		
+		
+		List<Integer> arr5 = new ArrayList<>();
+		arr5.add(1);
+		arr5.add(3);
+		arr5.add(3);
+		arr5.add(4);
+		arr5.add(6);
+		arr5.add(7);
+		arr5.add(7);
+		arr5.add(8);
+		arr5.add(9);
+		
+		arr5 = moveDuplicatesToEnd2(arr5);
+        
+        System.out.println("Original array:");
+        for (int num : arr5) {
+            System.out.print(num + " ");
+        }
+
+        System.out.println("\nArray after moving duplicates to end:");
+        for (int num : arr5) {
+            System.out.print(num + " ");
+        }
+		
 	}
 }
