@@ -91,6 +91,11 @@ public class SubArraysQuestions {
 			}
 		}
 		
+		if(end == -1) {
+			System.out.println("SubArray with target sum Not Found!");
+			return;
+		}
+		
 		if(maxLength == ((end-start) + 1)) {
 			
 			System.out.println("Longest Sub Array with Target Sum is: ");
@@ -100,6 +105,60 @@ public class SubArraysQuestions {
 			}
 		}
 		
+	}
+	
+	
+	public static void findAllSubArraysWithTargetSunm(int arr[], int sum) {
+		
+		int start = 0;
+		int end = -1;
+		int currentSum = 0;
+		List<List<Integer>> allSubArrays = new ArrayList<>();
+		
+		HashMap<Integer, Integer> map = new HashMap<>();
+		
+		for(int i = 0; i<arr.length; i++) {
+			
+			currentSum += arr[i];
+			
+			if(currentSum - sum == 0) {
+				start = 0;
+				end = i;
+				List<Integer> subArray = new ArrayList<>();
+				int idx = start;
+				while(idx<=end) {
+					subArray.add(arr[idx]);
+					idx++;
+				}
+				
+				allSubArrays.add(subArray);
+			}
+			
+			if(map.containsKey(currentSum-sum)) {
+				start = map.get(currentSum - sum) + 1;
+				end = i;
+				List<Integer> subArray = new ArrayList<>();
+				int idx = start;
+				while(idx<=end) {
+					subArray.add(arr[idx]);
+					idx++;
+				}
+				allSubArrays.add(subArray);
+			}
+			
+			map.put(currentSum, i);
+		}
+		
+		if(end == -1) {
+			System.out.println("SubArray with target sum Not Found!");
+			return;
+		} else {
+			System.out.println("All sub arrays with target sum are");
+			
+			for(List<Integer> subArray: allSubArrays) {
+				System.out.println(subArray);
+			}
+		}
 	}
 	
 
@@ -112,6 +171,8 @@ public class SubArraysQuestions {
 		subArrayWithTargetSum(arr, 5);
 		System.out.println("\n");
 		longestSubArrayWithTargetSum(arr,30);
+		System.out.println("\n");
+		findAllSubArraysWithTargetSunm(arr,20);
 
 	}
 
