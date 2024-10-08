@@ -108,7 +108,7 @@ public class SubArraysQuestions {
 	}
 	
 	
-	public static void findAllSubArraysWithTargetSunm(int arr[], int sum) {
+	public static void findAllSubArraysWithTargetSum(int arr[], int sum) {
 		
 		int start = 0;
 		int end = -1;
@@ -161,6 +161,42 @@ public class SubArraysQuestions {
 		}
 	}
 	
+	public static void largestSumSubArrayKadaneAlgo(int arr[]) {
+		
+		int start = 0;
+		int tempStart = 0;
+		int end = -1;
+		int currentSum = 0;
+		int maxSum = Integer.MIN_VALUE;
+		
+		for(int i = 0; i<arr.length; i++) {
+			
+			currentSum += arr[i];
+			
+			if(currentSum > maxSum) {
+				maxSum = currentSum;
+				start = tempStart;
+				end = i;
+			}
+			
+			if(currentSum < 0) {
+				currentSum = 0;
+				tempStart = i + 1;
+			}
+		}
+		
+		if(maxSum == Integer.MIN_VALUE) {
+			System.out.println("No valid subarray found.");
+		} else { 
+			System.out.println("The largest sum subarray is:");
+	        for (int i = start; i <= end; i++) {
+	            System.out.print(arr[i] + " ");
+	        }
+	        System.out.println("\nMaximum sum: " + maxSum);
+		}
+		
+	}
+	
 
 	public static void main(String[] args) {
 		
@@ -172,7 +208,9 @@ public class SubArraysQuestions {
 		System.out.println("\n");
 		longestSubArrayWithTargetSum(arr,30);
 		System.out.println("\n");
-		findAllSubArraysWithTargetSunm(arr,20);
+		findAllSubArraysWithTargetSum(arr,20);
+		System.out.println("\n");
+		largestSumSubArrayKadaneAlgo(arr);
 
 	}
 
