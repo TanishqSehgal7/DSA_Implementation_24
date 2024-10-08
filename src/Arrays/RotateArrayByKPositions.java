@@ -142,6 +142,7 @@ public class RotateArrayByKPositions {
 		}
 		
 		int arr4[] = {-1,3,4,5,-3,-4,6,7};
+		
 		moveAllNegativeElementToStart(arr4);
 		System.out.println("\n");
 		
@@ -161,7 +162,7 @@ public class RotateArrayByKPositions {
 		arr5.add(8);
 		arr5.add(9);
 		
-		arr5 = moveDuplicatesToEnd2(arr5);
+		arr5 = moveDuplicatesToEnd(arr5);
         
         System.out.println("Original array:");
         for (int num : arr5) {
