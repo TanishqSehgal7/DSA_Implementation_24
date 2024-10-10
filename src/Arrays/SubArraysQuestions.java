@@ -239,9 +239,9 @@ public class SubArraysQuestions {
 			}
 		}
 		
-		if(end == -1) {
+		if(maxLength != (end-start)+1) {
 			System.out.println("No such subArray found!");
-			System.out.println("CurrentSum: " + currentSum);
+			return;
 		} else {
 			System.out.println("SubArray containing equal number of 1's and 0's is:\n");
 			System.out.println("Start: " + start);
