@@ -37,11 +37,53 @@ public class ArraysQuestions {
 	}
 	
 	
+	public static int rowWithMaxNumberOfOnes(int arr[][]) {
+		
+		int countOfOnes = 0;
+		int maxCountOfOnes = Integer.MIN_VALUE;
+		
+		int s = 0;
+		int e = arr.length -1;
+		
+		int mid = s + (e-s)/2;
+		
+		int row = 0;
+		int ans = row;
+		
+		while(row < arr.length) {
+			
+			mid = s + (e-s)/2;
+			countOfOnes = 0;
+			
+			if(arr[row][mid] == 1) {
+				countOfOnes = (arr[0].length - mid);
+				maxCountOfOnes = Math.max(maxCountOfOnes, countOfOnes);
+				ans = row;
+			}
+			
+			if(arr[row][mid] < 1) {
+				s = mid -1;
+			}
+			row++;
+		}
+		
+		return ans;
+	}
+	
+	
 	public static void main(String[] args) {
 		
 		int arr[] = {8,5,3,10,7,4,1};
 		
-		largestElement(arr);		
+		int arr2[][] = {{0,1,1,1}, {0,0,1,1}, {1,1,1,1}, {0,0,0,0}};
+		
+		int key = 1;
+		
+		largestElement(arr);
+		
+		System.out.println("\n");
+		
+		System.out.println(rowWithMaxNumberOfOnes(arr2));
 	}
 
 }
