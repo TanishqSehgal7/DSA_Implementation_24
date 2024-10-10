@@ -197,6 +197,64 @@ public class SubArraysQuestions {
 		
 	}
 	
+	
+	public static void subArrayWithEqualZerosAndOnes(int arr[]) {
+		
+		int start = 0;
+		int end = -1;
+		int currentSum = 0;
+		int tempStart = 0;
+		int maxLength = (end - start) + 1;
+		
+		HashMap<Integer, Integer> map = new HashMap<>();
+		
+		for(int i = 0; i<arr.length; i++) {
+			if(arr[i] == 0) {
+				arr[i] = -1;
+			}
+		}
+		
+		for(int i = 0; i<arr.length; i++) {
+			
+			currentSum += arr[i];
+			
+			if(currentSum == 0) {
+				start = tempStart;
+				end = i;
+				maxLength = (end-start) + 1;
+			}
+			
+			if(map.containsKey(currentSum)) {
+				start = map.get(currentSum) + 1;
+				end = i;
+				maxLength = (end-start) + 1;
+			} else {
+				map.put(currentSum, i);
+			}
+		}
+		
+		for(int i = 0; i<arr.length; i++) {
+			if(arr[i] == -1) {
+				arr[i] = 0;
+			}
+		}
+		
+		if(end == -1) {
+			System.out.println("No such subArray found!");
+			System.out.println("CurrentSum: " + currentSum);
+		} else {
+			System.out.println("SubArray containing equal number of 1's and 0's is:\n");
+			System.out.println("Start: " + start);
+			System.out.println("End: " + end);
+			List<Integer> subArr = new ArrayList<>();
+			for(int i = start; i<=end; i++) {
+				subArr.add(arr[i]);
+			}
+			
+			System.out.println(subArr);
+		}	
+	}
+	
 
 	public static void main(String[] args) {
 		
@@ -206,11 +264,15 @@ public class SubArraysQuestions {
 		System.out.println("\n");
 		subArrayWithTargetSum(arr, 5);
 		System.out.println("\n");
-		longestSubArrayWithTargetSum(arr,30);
+		longestSubArrayWithTargetSum(arr,0);
 		System.out.println("\n");
 		findAllSubArraysWithTargetSum(arr,20);
 		System.out.println("\n");
 		largestSumSubArrayKadaneAlgo(arr);
+		
+		int arr2[] = {1,1,0,1,1,0,0};
+		
+		subArrayWithEqualZerosAndOnes(arr2);
 
 	}
 
