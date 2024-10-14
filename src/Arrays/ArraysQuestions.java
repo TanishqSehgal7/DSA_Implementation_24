@@ -85,5 +85,4 @@ public class ArraysQuestions {
 		
 		System.out.println(rowWithMaxNumberOfOnes(arr2));
 	}
-
 }
