@@ -7,50 +7,62 @@ public class SudokuSolver {
 
 	public static boolean sudokuSolver(int [][] board) {
 		
-		int n = board[0].length;
-		
-		for(int row = 0; row<n; row++) {
-			for(int col = 0; col < n; col++) {
-				
-				if(board[row][col] == 0) {
+		int n = board.length;
+
+		// Find the first empty cell (marked as 0)
+		for (int row = 0; row < n; row++) {
+			for (int col = 0; col < n; col++) {
+				if (board[row][col] == 0) {
 					
-					for(int val = 0; val <=9; val++) {
-						if(isSafe(row, col, board, val)) {
-							board[row][col] = 1;
-						}
-						
-						// recursive call
-						boolean isSolutionPossibleFurther = sudokuSolver(board);
-						
-						if(isSolutionPossibleFurther) {
-							return true;
-						} else {
-							// backtrack
+					// Try placing numbers 1 to 9
+					for (int val = 1; val <= 9; val++) {
+						if (isSafe(row, col, board, val)) {
+							board[row][col] = val;  // Place the value
+
+							// Recursively solve the rest of the board
+							if (sudokuSolver(board)) {
+								return true;  // If solved, return true
+							}
+
+							// Backtrack if placing val doesn't lead to a solution
 							board[row][col] = 0;
 						}
 					}
+					return false;  // If no valid number can be placed, backtrack
 				}
-				
-				return false;
 			}
 		}
-		
-		return true;
+		return true;  // If all cells are filled, the puzzle is solved
 	}
 	
 	public static boolean isSafe(int row, int col, int[][] board, int val) {
 		
-		for(int i = 0; i<board[0].length; i++) {
-			
-			if(board[row][i] == val) { // check if column contains value
-				return false;
-			} else if(board[i][col] == val) { // check if row contains value
-				return false;
-			} else if(board[3*(row/3) + i/3][(3*(col/3) + i%3)] == val) {
+		int n = board.length;
+
+		// Check the row and column
+		for (int i = 0; i < n; i++) {
+			if (board[row][i] == val || board[i][col] == val) {
 				return false;
 			}
 		}
-		return true;
+
+		// Check the 3x3 sub-grid
+		int subGridRow = 3 * (row / 3);
+		int subGridCol = 3 * (col / 3);
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
+				if (board[subGridRow + i][subGridCol + j] == val) {
+					return false;
+				}
+			}
+		}
+
+    	return true;  // Value is safe to place
+	}
+	
+	
+	public static void solveSudoku(int board [][]) {
+		sudokuSolver(board);
 	}
 	
 	
@@ -69,9 +81,9 @@ public class SudokuSolver {
 				{0,0,0,4,1,9,0,0,5},
 				{0,0,0,0,8,0,0,7,9}};
 		
-		System.out.println(sudokuSolver(board));
+		solveSudoku(board);
 		
-		for(int row = 0; row<board.length; row++) {
+		for(int row = 0; row < board.length; row++) {
 			for(int col = 0; col < board[0].length; col++) {
 				System.out.print(board[row][col] + " ");
 			}	
