@@ -26,7 +26,7 @@ public class BFS_Graph {
 		
 		List<Integer> ans = new ArrayList<>();
 		
-		for(int node=0; node<nodes; node++) {
+		for (Integer node : adjList.keySet()) {
 			if(!visited.get(node)) {
 				bfs(ans, node);
 			}
@@ -46,8 +46,12 @@ public class BFS_Graph {
 			// get front node from queue
 			int frontNode = queue.poll();
 			
+			System.out.println("Front Node:" + frontNode);
+			
 			// add frontNode to ans
 			ans.add(frontNode);
+			
+			System.out.println("Answer:" + ans);
 			
 			// traverse all neighbours of frontNode
 			for(int neighbour: adjList.getOrDefault(frontNode, new HashSet<>())) {
@@ -61,20 +65,21 @@ public class BFS_Graph {
 
 	public static void main(String[] args) {
 		
-		int nodes = 4;
+		int edges = scn.nextInt();
+		int nodes = scn.nextInt();
 		
-		for(int i=0; i<nodes; i++) {
+		for(int i=0; i<edges; i++) {
 			visited.put(i, false);	
 		}
 		
-		for(int i=0; i<nodes; i++) {
+		for(int i=0; i<edges; i++) {
 			int u = scn.nextInt();
 			int v = scn.nextInt();
 			prepareAdjacencyList(u, v);
 		}
 		System.out.println(adjList);
 		
-		List<Integer> bfsTraversal = BFS(nodes);
+		List<Integer> bfsTraversal = BFS(edges);
 		
 		System.out.println("BFS Traversal of Graph: " + bfsTraversal);
 	}
