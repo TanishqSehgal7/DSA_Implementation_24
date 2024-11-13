@@ -1,5 +1,4 @@
 package Graphs;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -35,7 +34,6 @@ public class GraphWithAdjacencyList {
 		
 		System.out.println(graph);
 	}
-
 }
 
 // Input
