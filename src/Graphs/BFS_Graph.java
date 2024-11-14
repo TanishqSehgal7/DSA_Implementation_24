@@ -68,7 +68,7 @@ public class BFS_Graph {
 		int edges = scn.nextInt();
 		int nodes = scn.nextInt();
 		
-		for(int i=0; i<edges; i++) {
+		for(int i=0; i<nodes; i++) {
 			visited.put(i, false);	
 		}
 		
@@ -84,9 +84,11 @@ public class BFS_Graph {
 		System.out.println("BFS Traversal of Graph: " + bfsTraversal);
 	}
 	
+//	4 4
+//	0 1
 //	0 3
-//	3 1
-//	1 4
 //	1 2
+//	2 3
+//  Time Complexity - O(nodes+edges)
 	
 }
