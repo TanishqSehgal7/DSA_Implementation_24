@@ -25,7 +25,7 @@ public class DFS_Graph {
 		List<Integer> ans = new ArrayList<>();
 		
 		for(int node=0; node<numberOfNodes; node++) {
-			if(!visited.get(node)) {
+			if(!visited.getOrDefault(node,false)) {
 				dfs(ans, node);
 			}
 		}
@@ -37,11 +37,11 @@ public class DFS_Graph {
 	public static void dfs(List<Integer> ans, int node) {
 		
 		ans.add(node);
-		
 		visited.replace(node, false, true);
 		
+		// for all nodes inside adjList call dfs recursively
 		for(int neighbour: adjList.getOrDefault(node, new HashSet<>())) {
-			if(!visited.get(neighbour)) {
+			if(!visited.getOrDefault(neighbour,false)) {
 				dfs(ans, neighbour);
 			}
 		}
@@ -74,6 +74,13 @@ public class DFS_Graph {
 
 }
 
+//7 6
+//1 5
+//1 4
+//1 2
+//2 7
+//2 6
+//2 3
 
 //5 5
 //0 2
