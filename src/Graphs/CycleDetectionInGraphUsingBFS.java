@@ -22,7 +22,7 @@ public class CycleDetectionInGraphUsingBFS {
 	static String cycleDetectionUsingBFS(int numberOfEdges, int numberOfNodes) {
 		
 		for(int node=0;node<numberOfNodes;node++) {
-			if(!visited.get(node)) {
+			if(!visited.getOrDefault(node,false)) {
 				boolean containsCycle = hasCycleBFS(node);
 				if(containsCycle) {
 					return "Graph has a cycle.";
@@ -34,9 +34,7 @@ public class CycleDetectionInGraphUsingBFS {
 	}
 	
 	public static boolean hasCycleBFS(int node) {
-		
-		boolean isCyclicBFS = false;
-		
+				
 		parentMap.put(node,-1);
 		visited.replace(node, true);
 		
@@ -47,17 +45,51 @@ public class CycleDetectionInGraphUsingBFS {
 			
 			int frontNode = queue.poll();
 			
+			System.out.println("Front Node: " + frontNode);
+			
 			for(int neighbour: adjList.getOrDefault(frontNode, new HashSet<>())) {
-				
-				if(visited.get(neighbour) && neighbour!=parentMap.get(frontNode)) {
+				System.out.println("Neighbour: " + neighbour);
+				if(visited.getOrDefault(neighbour,false) && neighbour!=parentMap.getOrDefault(frontNode,node)) {
 					return true;
-				} else if(!visited.get(neighbour)) {
+				} else if(!visited.getOrDefault(neighbour,false)) {
 					queue.add(neighbour);
 					visited.replace(neighbour, true);
 					parentMap.put(neighbour, frontNode);
 				}
 			}
 			
+		}
+		return false;
+	}
+	
+	static String cycleDetectionUsingDFS(int numberOfEdges, int numberOfNodes) {
+		
+		for(int node=0;node<numberOfNodes;node++) {
+			if(!visited.getOrDefault(node,false)) {
+				boolean containsCycle = hasCycleDFS(node, -1);
+				System.out.println("Contains cycle DFS?" + containsCycle);
+				if(containsCycle) {
+					return "Graph has a cycle.";
+				} 
+			}
+		}
+		
+		return "Graph does not have a cycle.";
+	}
+	
+	public static boolean hasCycleDFS(int node, int parent) {
+		
+		visited.replace(node, true);
+		
+		for(int neighbour: adjList.getOrDefault(node, new HashSet<>())) {
+			if(!visited.getOrDefault(neighbour, false)) {
+				boolean cycleDetected = hasCycleDFS(neighbour,node);
+				if(cycleDetected) {
+					return true;
+				}
+			} else if(neighbour != parent) {
+				return true;
+			}
 		}
 		return false;
 	}
@@ -78,6 +110,28 @@ public class CycleDetectionInGraphUsingBFS {
 		for(int i=0; i<numberOfNodes; i++) {
 			visited.put(i, false);
 		}
-	}
+		
+		System.out.println(cycleDetectionUsingBFS(numberOfEdges, numberOfNodes));
+		
+		for(int i=0; i<numberOfNodes; i++) {
+			visited.put(i, false);
+		}
+		
+		System.out.println(cycleDetectionUsingDFS(numberOfEdges, numberOfNodes));
 
+		System.out.println("Visited Map: " + visited);
+		System.out.println("Parent Map: " + parentMap);
+		System.out.println("Adj List: " + adjList);
+	}
 }
+
+//9 8
+//1 2
+//2 3
+//4 5
+//5 6
+//5 7
+//6 8
+//7 8
+//8 9
+
