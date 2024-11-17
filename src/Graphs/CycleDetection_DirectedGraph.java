@@ -14,7 +14,6 @@ public class CycleDetection_DirectedGraph {
 	
 	public static void prepareAdjList(int u, int v) {
 		adjList.computeIfAbsent(u, k->new HashSet<>()).add(v);
-//		adjList.computeIfAbsent(v, k->new HashSet<>()).add(u);
 	}
 	
 	public static String cycleDetectionUsingDFS(int numberOfNodes) {
