@@ -48,11 +48,16 @@ public class ShortestPathInDirectedGraph_BFS {
 		
 		int currentNode = dest;
 		shortestRoute.add(currentNode);
+		int shortestPathSize = 0;
 		while(currentNode!=src) {
 			System.out.println("Current Node: " + currentNode);
 			currentNode = parent.get(currentNode);
 			shortestRoute.add(currentNode);
+			shortestPathSize++;
 		}
+		
+		System.out.println("Length of Shortest Path = " + shortestPathSize);
+		Collections.reverse(shortestRoute);
 		
 		return shortestRoute;
 	}
@@ -76,12 +81,10 @@ public class ShortestPathInDirectedGraph_BFS {
 			parent.put(i, -1);
 		}
 		
-		LinkedList<Integer> shortestNode = findShortestRoute(numberOfNodes, 1, 8);
+		LinkedList<Integer> shortestRoute = findShortestRoute(numberOfNodes, 1, 8);
 		System.out.println("Parent: " + parent);
-		Collections.reverse(shortestNode);
-		System.out.println(shortestNode);
+		System.out.println(shortestRoute);
 	}
-
 }
 
 //8 9
