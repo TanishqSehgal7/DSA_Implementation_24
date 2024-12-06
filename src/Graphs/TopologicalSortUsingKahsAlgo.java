@@ -56,7 +56,6 @@ public class TopologicalSortUsingKahsAlgo {
 				}
 			}
 		}
-		
 		return ans;
 	}
 	
@@ -81,5 +80,4 @@ public class TopologicalSortUsingKahsAlgo {
 		List<Integer> kahnsAlgoTopoSort = topologicalSortKahnsAlgo(numberOfNodes);
 		System.out.println(kahnsAlgoTopoSort);
 	}
-	
 }

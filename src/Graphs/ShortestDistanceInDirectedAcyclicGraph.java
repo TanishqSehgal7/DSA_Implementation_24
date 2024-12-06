@@ -58,8 +58,7 @@ public class ShortestDistanceInDirectedAcyclicGraph {
 		
 		while(!stack.isEmpty()) {
 			
-			int top = stack.peek();
-			stack.pop();
+			int top = stack.pop();
 			
 			if(distanceMap.getOrDefault(top, Integer.MAX_VALUE) != Integer.MAX_VALUE) {
 				int i = 0;

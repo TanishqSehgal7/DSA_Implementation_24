@@ -22,27 +22,27 @@ public class DFS_Graph {
 	
 	public static List<Integer> DFS(int numberOfNodes) {
 		
-		List<Integer> ans = new ArrayList<>();
+		List<Integer> dfsAns = new ArrayList<>();
 		
-		for(int node=0; node<numberOfNodes; node++) {
-			if(!visited.getOrDefault(node,false)) {
-				dfs(ans, node);
+		for(int i = 0; i<numberOfNodes; i++) {
+			if(!visited.getOrDefault(i, false)) {
+				dfs(dfsAns, i);
 			}
 		}
 		
-		return ans;
+		return dfsAns;
 	}
 	
 	
 	public static void dfs(List<Integer> ans, int node) {
 		
+		visited.replace(node, true);
 		ans.add(node);
-		visited.replace(node, false, true);
 		
-		// for all nodes inside adjList call dfs recursively
-		for(int neighbour: adjList.getOrDefault(node, new HashSet<>())) {
-			if(!visited.getOrDefault(neighbour,false)) {
-				dfs(ans, neighbour);
+		for(int neighbor: adjList.getOrDefault(node, new HashSet<>())) {
+			
+			if(!visited.get(neighbor)) {
+				dfs(ans, neighbor);
 			}
 		}
 	}
@@ -74,18 +74,13 @@ public class DFS_Graph {
 
 }
 
-//7 6
-//1 5
+//6 6
+//0 4
 //1 4
-//1 2
-//2 7
-//2 6
+//1 5
+//3 5
+//2 4
 //2 3
 
-//5 5
-//0 2
-//2 4
-//4 3
-//3 1
-//1 2
+
 
