@@ -13,50 +13,56 @@ import java.util.Set;
 public class TopologicalSortUsingKahsAlgo {
 
 	static Scanner scn = new Scanner(System.in);
-	static HashMap<Integer, Set<Integer>> adjList = new HashMap<>();
+	static HashMap<Integer, ArrayList<Integer>> adjList = new HashMap<>();
 	static HashMap<Integer, Integer> inDegree = new HashMap<>();
 	static Queue<Integer> queue = new LinkedList<>();
 	
 	public static void prepareAdjList(int u, int v) {
-		adjList.computeIfAbsent(u, k->new HashSet<>()).add(v);
+	
+		adjList.computeIfAbsent(u, k->new ArrayList<>()).add(v);
+	
 	}
+	
 	
 	public static List<Integer> topologicalSortKahnsAlgo(int numberOfNodes) {
 		
-		List<Integer> ans = new ArrayList<>();
+		List<Integer> topologicalSort = new ArrayList<>();
 		
-		// Step 1: find indegree
-		for(int node = 1; node<=numberOfNodes; node++) {
-			for(int neighbour: adjList.getOrDefault(node, new HashSet<>())) {
-				int indegree = inDegree.getOrDefault(neighbour,0) + 1;
-				inDegree.put(neighbour, indegree);
+		// find in-degree of all nodes
+		
+		for(int i=1; i<=numberOfNodes; i++) {
+			for(int neighbor: adjList.getOrDefault(i, new ArrayList<>())) {
+				int indegree = inDegree.getOrDefault(neighbor,0) + 1;
+				inDegree.put(neighbor, indegree);
 			}
 		}
 		
-		// Step 2: insert all elements with indegree 0 in the queue
+		// add nodes with in-degree 0 to the queue
+		
 		for(Map.Entry<Integer, Integer> entry: inDegree.entrySet()) {
 			if(entry.getValue() == 0) {
 				queue.add(entry.getKey());
 			}
 		}
 		
-		// Step 3: apply BFS
+		// apply BFS and store topological sort inside the list
 		
 		while(!queue.isEmpty()) {
 			
 			int front = queue.poll();
-			ans.add(front);
+			topologicalSort.add(front);
 			
-			for(int neighbour: adjList.getOrDefault(front, new HashSet<>())) {
-				int reducedInDegree = inDegree.getOrDefault(neighbour, 1) - 1;
-				inDegree.put(neighbour, reducedInDegree);
+			for(int neighbor: adjList.getOrDefault(front, new ArrayList<>())) {
+				int indegree = inDegree.get(neighbor) - 1;
+				inDegree.put(neighbor, indegree);
 				
-				if(inDegree.getOrDefault(neighbour, 1) == 0) {
-					queue.add(neighbour);
+				if(inDegree.get(neighbor) == 0) {
+					queue.add(neighbor);
 				}
 			}
 		}
-		return ans;
+		
+		return topologicalSort;
 	}
 	
 	
