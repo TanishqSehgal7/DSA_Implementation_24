@@ -1,14 +1,16 @@
 package Graphs;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 import java.util.Scanner;
 import java.util.Set;
 
-public class ShortestPathInDirectedGraph_BFS {
+public class ShortestPathInUnDirectedGraph_BFS {
 
 	
 	static Scanner scn = new Scanner(System.in);
@@ -26,40 +28,42 @@ public class ShortestPathInDirectedGraph_BFS {
 	
 	public static LinkedList<Integer> findShortestRoute(int numberOfNodes, int src, int dest) {
 		
-		visited.replace(src, true);
+		visited.put(src, true);
+		parent.put(src, -1);
 		queue.add(src);
+		
+		// apply BFS on adjList
 		
 		while(!queue.isEmpty()) {
 			
 			int front = queue.poll();
 			
-			for(int neighbour: adjList.getOrDefault(front, new HashSet<>())) {
-				
-				if(!visited.getOrDefault(neighbour,false)) {
-					visited.replace(neighbour, true);
-					parent.replace(neighbour, front);
-					queue.add(neighbour);
+			for(int neighbor: adjList.getOrDefault(front, new HashSet<>())) {
+				if(!visited.getOrDefault(neighbor, false)) {
+					visited.put(neighbor, true);
+					parent.put(neighbor, front);
+					queue.add(neighbor);
 				}
 			}
 		}
 		
-		// prepare shortest path by backtracking from destination node
+		
 		LinkedList<Integer> shortestRoute = new LinkedList<>();
 		
+		int shortestDistance = 0;
 		int currentNode = dest;
 		shortestRoute.add(currentNode);
-		int shortestPathSize = 0;
-		while(currentNode!=src) {
-			System.out.println("Current Node: " + currentNode);
+		
+		while(currentNode != src) {
 			currentNode = parent.get(currentNode);
 			shortestRoute.add(currentNode);
-			shortestPathSize++;
+			shortestDistance++;
 		}
 		
-		System.out.println("Length of Shortest Path = " + shortestPathSize);
-		Collections.reverse(shortestRoute);
-		
-		return shortestRoute;
+		Collections.sort(shortestRoute);
+		System.out.println("Shortest distance is: " + shortestDistance);
+		return (LinkedList<Integer>) shortestRoute;
+	
 	}
 	
 	

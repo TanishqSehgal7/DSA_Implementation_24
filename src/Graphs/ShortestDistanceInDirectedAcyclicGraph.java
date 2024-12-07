@@ -2,6 +2,7 @@ package Graphs;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -31,10 +32,11 @@ public class ShortestDistanceInDirectedAcyclicGraph {
 		adjList.computeIfAbsent(u, k-> new ArrayList<>()).add(nodeWitWeight);
 	}
 	
+	// find topological sort
 	public static void topologicalSort(int numberOfNodes) {
 		
-		for(int i=0; i<numberOfNodes; i++) {
-			if(!visited.getOrDefault(i, false)) {
+		for(int i=0; i<=numberOfNodes; i++) {
+			if(!visited.getOrDefault(i,false)) {
 				dfs(i);
 			}
 		}
@@ -42,34 +44,35 @@ public class ShortestDistanceInDirectedAcyclicGraph {
 	
 	public static void dfs(int node) {
 		
-		visited.replace(node, true);
+		visited.put(node, true);
 		
-		for(Pair neighbour : adjList.getOrDefault(node, new ArrayList<>())) {
-			if(!visited.getOrDefault(neighbour.node, false)) {
-				dfs(neighbour.node);
+		for(Pair neighbor: adjList.getOrDefault(node, new ArrayList<>())) {
+			if(!visited.getOrDefault(neighbor.node, false)) {
+				dfs(neighbor.node);
 			}
 		}
+		
 		stack.add(node);
 	}
 	
-	public static void getShortestPathForDirectedAcyclicGraph(int src) {
+	public static void shortestDistanceInDAG(int src) {
 		
-		distanceMap.replace(src, 0);
+		distanceMap.put(src, 0);
 		
 		while(!stack.isEmpty()) {
-			
-			int top = stack.pop();
+			int top = stack.peek();
+			stack.pop();
 			
 			if(distanceMap.getOrDefault(top, Integer.MAX_VALUE) != Integer.MAX_VALUE) {
-				int i = 0;
 				for(Pair pair: adjList.getOrDefault(top, new ArrayList<>())) {
-					int newDistance = distanceMap.get(top) + pair.weight;
-					if(newDistance < distanceMap.get(pair.node)) {
-						distanceMap.replace(pair.node, newDistance);
+					int newDist = distanceMap.get(top) + pair.weight;
+					if(newDist < distanceMap.get(pair.node)) {
+						distanceMap.put(pair.node, newDist);
 					}
 				}
 			}
 		}
+		
 	}
 	
 	public static void main(String[] args) {
@@ -98,7 +101,7 @@ public class ShortestDistanceInDirectedAcyclicGraph {
 			}
 		}
 		topologicalSort(numberOfNodes);
-		getShortestPathForDirectedAcyclicGraph(1);
+		shortestDistanceInDAG(1);
 		
 		System.out.println(distanceMap);
 	}
