@@ -12,9 +12,9 @@ public class DijkstrasAlgorithmForShortestDistances {
 
 	
 	static Scanner scn = new Scanner(System.in);
+	static PriorityQueue<Pair> pq = new PriorityQueue<>();
 	static HashMap<Integer, List<Pair>> adjList = new HashMap<>();
 	static HashMap<Integer, Integer> distanceMap = new HashMap<>();
-	static PriorityQueue<Pair> pq = new PriorityQueue<>();
 	
 	public static class Pair implements Comparable<Pair> {
         int node;
@@ -40,30 +40,29 @@ public class DijkstrasAlgorithmForShortestDistances {
 
     public static void dijkstrasAlgoForShortestDistances(int source) {
 
-        distanceMap.replace(source, 0);
-        pq.add(new Pair(source, 0));
-
-        while (!pq.isEmpty()) {
-
-            // Fetch top record
-            Pair topRecord = pq.poll();
-
-            int nodeDistance = topRecord.weight;
-            int topNode = topRecord.node;
-
-            // Traverse neighbors
-            for (Pair neighbour : adjList.getOrDefault(topNode, new ArrayList<>())) {
-                int newDist = nodeDistance + neighbour.weight;
-
-                if (newDist < distanceMap.getOrDefault(neighbour.node, Integer.MAX_VALUE)) {
-                    // Update distance map and add updated node to the priority queue
-                    distanceMap.put(neighbour.node, newDist);
-                    pq.add(new Pair(neighbour.node, newDist));
-                }
-            }
+    	// add source with distance 0 to distanceMap
+        distanceMap.put(source, 0);
+        pq.add(new Pair(source,0));
+        
+        while(!pq.isEmpty()) {
+        	
+        	Pair top = pq.poll();
+        	
+        	int topNode = top.node;
+        	int topNodeWeight = top.weight;
+        	
+        	for(Pair neighbor: adjList.getOrDefault(topNode, new ArrayList<>())) {
+        		
+        		int newMinDistance = topNodeWeight + neighbor.weight;
+        		
+        		if(newMinDistance < distanceMap.getOrDefault(neighbor.node, Integer.MAX_VALUE)) {
+        			distanceMap.put(neighbor.node, newMinDistance);
+        			pq.add(new Pair(neighbor.node, newMinDistance));
+        		}
+        	}
         }
+        
     }
-
 	
 	public static void main(String[] args) {
 		
@@ -97,8 +96,8 @@ public class DijkstrasAlgorithmForShortestDistances {
         for (Entry<Integer, Integer> entry : distanceMap.entrySet()) {
             System.out.println("Node " + entry.getKey() + " -> Distance: " + entry.getValue());
         }
-
 	}
+	
 }
 
 

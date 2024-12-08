@@ -1,9 +1,11 @@
 package Graphs;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.PriorityQueue;
 import java.util.Scanner;
 
 
@@ -13,9 +15,6 @@ public class PrimsAlgorithm {
     static HashMap<Integer, List<Pair>> adjList = new HashMap<>();
     static int numberOfNodes;
     static int numberOfEdges;
-    static int[] parent;
-    static int[] key;
-    static boolean[] mst;
 
     public static class Pair implements Comparable<Pair> {
         int node;
@@ -39,39 +38,74 @@ public class PrimsAlgorithm {
         adjList.computeIfAbsent(v, k -> new ArrayList<>()).add(nodeWithWeight2);
     }
 
-    public static int[] primsAlgo(int key[], int parent[], boolean mst[]) {
+//    public static int[] primsAlgo(int key[], int parent[], boolean mst[]) {
+//
+//        for (int count = 0; count < numberOfNodes; count++) {
+//
+//            // Find the minimum key value among non-MST nodes
+//            int mini = Integer.MAX_VALUE;
+//            int minIdx = 0;
+//
+//            for (int i = 0; i < numberOfNodes; i++) {
+//                if (!mst[i] && key[i] < mini) {
+//                    mini = key[i];
+//                    minIdx = i;
+//                }
+//            }
+//
+//            System.out.println("Selected minimum node: " + minIdx + " with key value: " + mini);
+//
+//            // Mark the selected node as part of MST
+//            mst[minIdx] = true;
+//
+//            // Update key values for the neighbors
+//            for (Pair neighbour : adjList.getOrDefault(minIdx, new ArrayList<>())) {
+//
+//                int node = neighbour.node;
+//                int weight = neighbour.weight;
+//
+//                if (!mst[node] && weight < key[node]) {
+//                    System.out.println("Updating node: " + node + " with parent: " + minIdx + " and weight: " + weight);
+//                    parent[node] = minIdx;
+//                    key[node] = weight;
+//                }
+//            }
+//        }
+//        return parent;
+//    }
+    
+    
+    public static int[] primsAlgoOptimised(int source, int[] parent, boolean[] mst) {
+        PriorityQueue<Pair> pq = new PriorityQueue<>();
+        pq.add(new Pair(source, 0));
 
-        for (int count = 0; count < numberOfNodes; count++) {
+        int minCostOfMST = 0;
 
-            // Find the minimum key value among non-MST nodes
-            int mini = Integer.MAX_VALUE;
-            int u = 0;
+        while (!pq.isEmpty()) {
+            Pair front = pq.poll();
 
-            for (int i = 0; i < numberOfNodes; i++) {
-                if (!mst[i] && key[i] < mini) {
-                    mini = key[i];
-                    u = i;
-                }
-            }
+            int frontNode = front.node;
+            int frontWeight = front.weight;
 
-            System.out.println("Selected minimum node: " + u + " with key value: " + mini);
+            if (mst[frontNode]) continue;
 
-            // Mark the selected node as part of MST
-            mst[u] = true;
+            // Include the node in the MST
+            minCostOfMST += frontWeight;
+            mst[frontNode] = true;
 
-            // Update key values for the neighbors
-            for (Pair neighbour : adjList.getOrDefault(u, new ArrayList<>())) {
+            // Traverse all edges connected to the node
+            for (Pair edge : adjList.getOrDefault(frontNode, new ArrayList<>())) {
+                int edgeNode = edge.node;
+                int edgeWeight = edge.weight;
 
-                int node = neighbour.node;
-                int weight = neighbour.weight;
-
-                if (!mst[node] && weight < key[node]) {
-                    System.out.println("Updating node: " + node + " with parent: " + u + " and weight: " + weight);
-                    parent[node] = u;
-                    key[node] = weight;
+                if (!mst[edgeNode] && edgeWeight < frontWeight) {
+                    pq.add(new Pair(edgeNode, edgeWeight));
+                    parent[edgeNode] = frontNode; // Update parent to reconstruct MST
                 }
             }
         }
+
+        System.out.println("Minimum cost of MST = " + minCostOfMST);
         return parent;
     }
 
@@ -82,19 +116,16 @@ public class PrimsAlgorithm {
     	System.out.println("Enter Number of Edges:\n");
     	numberOfEdges = scn.nextInt();
     	
-    	parent = new int[numberOfNodes];
-    	key = new int[numberOfNodes];
-    	mst = new boolean[numberOfNodes];
+    	int[] parent = new int[numberOfNodes];
+//        int[] key = new int[numberOfNodes];
+        boolean[] mst = new boolean[numberOfNodes];
 
-        for (int i = 0; i < numberOfNodes; i++) {
-            parent[i] = -1;
-            mst[i] = false;
-            key[i] = Integer.MAX_VALUE;
-        }
+        Arrays.fill(parent, -1);
+        Arrays.fill(mst, false);
 
         System.out.println("Enter the value of source:");
         int source = scn.nextInt();
-        key[source] = 0;
+//        key[source] = 0;
 
         for (int i = 0; i < numberOfEdges; i++) {
 
@@ -111,8 +142,9 @@ public class PrimsAlgorithm {
                 System.out.println(pair.node + " has weight " + pair.weight);
             }
         }
-
-        parent = primsAlgo(key, parent, mst);
+        
+       
+        parent = primsAlgoOptimised(source, parent, mst);
 
         System.out.println("Parent array:");
         for (int i = 0; i < parent.length; i++) {
