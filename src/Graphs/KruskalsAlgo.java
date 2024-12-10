@@ -59,6 +59,7 @@ public class KruskalsAlgo {
 		}
 		
 		public static boolean union(int u, int v) {
+			
 			int rootU = findParentForPathComparession(u);
 			int rootV = findParentForPathComparession(v);
 			

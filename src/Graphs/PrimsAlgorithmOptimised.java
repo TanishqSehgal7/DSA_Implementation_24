@@ -88,13 +88,7 @@ public class PrimsAlgorithmOptimised {
 						parent.set(edgeNode, frontNode);
 					}
 				}
-
-				System.out.println("Priority Queue is:\n");
-				for(Pair pair: pq) {
-					System.out.println("Node: " + pair.node + " has weight " + pair.weight);
-				}
 			}
-
 		}
 
 		System.out.println("Minimum Cost of MST is: " + minCostOfMST);
